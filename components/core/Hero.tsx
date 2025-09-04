@@ -20,10 +20,10 @@ export default function CoreHero() {
               ascension costs — with beginner guides and meta insights.
             </p>
             <div className="flex gap-3 pt-2">
-              <Button asChild>
+              <Button size="lg" asChild>
                 <a href="/heroes">Browse Heroes</a>
               </Button>
-              <Button variant="secondary" asChild>
+              <Button size="lg" variant="secondary" asChild>
                 <a href="/ascension">Ascension Costs</a>
               </Button>
             </div>
