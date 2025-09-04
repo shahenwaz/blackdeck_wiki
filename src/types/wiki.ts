@@ -40,7 +40,7 @@ export interface BaseCard {
   name: string;
   rarity: Rarity;
   faction: Faction;
-  role: "DPS" | "Tank" | "Support" | "Control" | "Summoner";
+  class: "TANK" | "WARRIOR" | "SUPPORT" | "MAGE" | "ROGUE";
   image?: string;
   tags?: string[];
   release?: string;
