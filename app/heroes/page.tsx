@@ -1,4 +1,5 @@
 "use client";
+
 import { HEROES } from "@/src/types/heroes";
 import { useMemo, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
@@ -8,6 +9,7 @@ const rarities = ["Common", "Rare", "Epic", "Legendary"] as const;
 
 export default function HeroesPage() {
   const [rarity, setRarity] = useState<string>("All");
+
   const list = useMemo(() => {
     return HEROES.filter((h) =>
       rarity === "All" ? true : h.rarity === rarity
@@ -18,7 +20,7 @@ export default function HeroesPage() {
     <div className="mx-auto max-w-6xl px-4 py-8">
       <h1 className="text-2xl font-semibold mb-4">Heroes</h1>
 
-      {/* Tailark-like filter pill row */}
+      {/* filter pill row (Tailark-like) */}
       <div className="mb-6 flex flex-wrap gap-2">
         <button
           onClick={() => setRarity("All")}
@@ -37,7 +39,7 @@ export default function HeroesPage() {
         ))}
       </div>
 
-      {/* Tailark-like card grid */}
+      {/* card grid */}
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {list.map((h) => (
           <Card key={h.id} className="bg-white/5 hover:bg-white/10 transition">
