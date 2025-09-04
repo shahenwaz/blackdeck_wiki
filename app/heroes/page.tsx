@@ -7,6 +7,8 @@ import { Badge } from "@/components/ui/badge";
 
 const rarities = ["Common", "Rare", "Epic", "Legendary"] as const;
 
+export const metadata = { title: "Heroes | BlackDeck WiKi" };
+
 export default function HeroesPage() {
   const [rarity, setRarity] = useState<string>("All");
 

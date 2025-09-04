@@ -10,6 +10,8 @@ function totalStones(from: number, to: number) {
   ).reduce((sum, s) => sum + s.soulstones, 0);
 }
 
+export const metadata = { title: "Ascension | BlackDeck WiKi" };
+
 export default function AscensionPage() {
   const [from, setFrom] = useState(1);
   const [to, setTo] = useState(6);
