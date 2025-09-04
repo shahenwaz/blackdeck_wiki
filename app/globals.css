@@ -1,42 +1,201 @@
+@import "tailwindcss";
+
+/* =========
+   Design tokens
+   ========= */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Light (fallbacks set via media/query & class toggles below) */
+  --background: 0 0% 100%;
+  --foreground: 0 0% 10%;
+
+  --primary: 134 91% 35%;
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 134 25% 92%;
+  --secondary-foreground: 0 0% 10%;
+
+  --muted: 0 0% 96%;
+  --muted-foreground: 0 0% 45%;
+
+  --accent: 134 91% 35%;
+  --accent-foreground: 0 0% 100%;
+
+  /* shadcn/ui friendly extras */
+  --card: var(--background);
+  --card-foreground: var(--foreground);
+  --popover: var(--background);
+  --popover-foreground: var(--foreground);
+  --border: 0 0% 88%;
+  --input: 0 0% 88%;
+  --ring: var(--accent);
+
+  --radius: 1rem;
 }
 
-@media (prefers-color-scheme: dark) {
+/* Prefer DARK by default (your request), but allow auto-light if user prefers */
+:root {
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    color-scheme: light;
   }
 }
 
+/* Force DARK (class or data-theme) */
+.dark,
+[data-theme="dark"] {
+  --background: 0 0% 9%;
+  --foreground: 0 0% 100%;
+
+  --primary: 134 91% 62%;
+  --primary-foreground: 0 0% 10%;
+
+  --secondary: 134 25% 22%;
+  --secondary-foreground: 0 0% 100%;
+
+  --muted: 134 15% 15%;
+  --muted-foreground: 0 0% 70%;
+
+  --accent: 134 91% 62%;
+  --accent-foreground: 0 0% 10%;
+
+  --card: var(--background);
+  --card-foreground: var(--foreground);
+  --popover: var(--background);
+  --popover-foreground: var(--foreground);
+  --border: 0 0% 20%;
+  --input: 0 0% 20%;
+  --ring: var(--accent);
+}
+
+/* Force LIGHT (class or data-theme) */
+.light,
+[data-theme="light"] {
+  --background: 0 0% 100%;
+  --foreground: 0 0% 10%;
+
+  --primary: 134 91% 35%;
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 134 25% 92%;
+  --secondary-foreground: 0 0% 10%;
+
+  --muted: 0 0% 96%;
+  --muted-foreground: 0 0% 45%;
+
+  --accent: 134 91% 35%;
+  --accent-foreground: 0 0% 100%;
+
+  --card: var(--background);
+  --card-foreground: var(--foreground);
+  --popover: var(--background);
+  --popover-foreground: var(--foreground);
+  --border: 0 0% 88%;
+  --input: 0 0% 88%;
+  --ring: var(--accent);
+}
+
+/* =========
+   Base
+   ========= */
 html,
 body {
-  max-width: 100vw;
-  overflow-x: hidden;
+  height: 100%;
 }
-
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  @apply bg-[hsl(var(--background))] text-[hsl(var(--foreground))] antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+/* Smooth theme transitions (optional; feels premium) */
+*,
+*::before,
+*::after {
+  transition: background-color 150ms linear, border-color 150ms linear,
+    color 150ms linear, fill 150ms linear, stroke 150ms linear;
 }
 
+/* Container helper */
+.container {
+  @apply mx-auto px-4 sm:px-6 lg:px-8;
+  max-width: 1200px;
+}
+
+/* Headings */
+h1,
+h2,
+h3,
+h4 {
+  @apply tracking-tight;
+}
+
+/* Cards & surfaces (works nicely with shadcn/ui) */
+.card {
+  @apply rounded-2xl shadow-sm border;
+  border-color: hsl(var(--border));
+  background: hsl(var(--card));
+  color: hsl(var(--card-foreground));
+}
+
+/* Links */
 a {
-  color: inherit;
-  text-decoration: none;
+  @apply underline-offset-4 hover:underline;
+  color: hsl(var(--accent));
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+/* Inputs */
+input,
+textarea,
+select {
+  @apply rounded-lg border focus:outline-none;
+  border-color: hsl(var(--input));
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+/* Scrollbar – subtle, gamey */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--muted-foreground)) transparent;
+}
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: hsl(var(--muted-foreground));
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+/* PNG & pixel-art friendliness */
+img {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges; /* sharp for UI PNGs/icons */
+}
+
+/* Utility for subtle glass panels (great for PNG overlays) */
+.panel {
+  background: color-mix(
+    in oklab,
+    hsl(var(--background)) 92%,
+    hsl(var(--foreground)) 8%
+  );
+  @apply border rounded-2xl;
+  border-color: hsl(var(--border));
+}
+
+/* Buttons (minimal baseline; shadcn will layer on top) */
+.btn {
+  @apply inline-flex items-center justify-center rounded-xl px-4 py-2 font-medium shadow-sm;
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+}
+.btn-outline {
+  @apply inline-flex items-center justify-center rounded-xl px-4 py-2 font-medium shadow-sm border;
+  border-color: hsl(var(--border));
+  color: hsl(var(--foreground));
+  background: transparent;
 }
