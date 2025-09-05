@@ -20,10 +20,13 @@ function NavLink({ href, label }: { href: string; label: string }) {
   const active = pathname === href || pathname?.startsWith(href + "/");
   return (
     <Link
-      className={`text-sm transition-colors ${
-        active ? "text-white" : "text-white/80 hover:text-white"
-      }`}
       href={href}
+      className={[
+        "text-sm transition-colors",
+        active
+          ? "text-white"
+          : "text-white/80 hover:text-[hsl(var(--accent-foreground))]",
+      ].join(" ")}
     >
       {label}
     </Link>
@@ -41,17 +44,27 @@ export default function SiteNavbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // lock body scroll when drawer is open
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
   return (
     <header className="fixed top-0 z-50 w-full">
       <nav
         data-state={open ? "active" : undefined}
-        className={`border-b transition-colors duration-150 ${
-          scrolled ? "bg-background/50 backdrop-blur-3xl" : "bg-transparent"
-        }`}
+        className={[
+          "transition-colors duration-150",
+          "border-b border-white/20", // darker separator
+          scrolled ? "bg-background/55 backdrop-blur-3xl" : "bg-transparent",
+        ].join(" ")}
       >
         <div className="mx-auto max-w-6xl px-4">
           <div className="relative flex h-14 items-center justify-between gap-6">
-            {/* Brand (left) */}
+            {/* Brand */}
             <Link
               href="/"
               aria-label="home"
@@ -69,38 +82,51 @@ export default function SiteNavbar() {
               ))}
             </ul>
 
-            {/* Mobile toggle (right) */}
+            {/* Mobile toggle */}
             <Button
               size="icon"
               variant="ghost"
-              className="lg:hidden"
+              className="lg:hidden z-50 text-white cursor-pointer hover:text-[hsl(var(--accent-foreground))]"
               onClick={() => setOpen((s) => !s)}
               aria-label={open ? "Close menu" : "Open menu"}
             >
-              {open ? <X size={20} /> : <Menu size={20} />}
+              {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </Button>
           </div>
-
-          {/* Mobile drawer */}
-          {open && (
-            <div className="lg:hidden border-t border-white/10 bg-background/95">
-              <ul className="flex flex-col gap-4 px-4 py-4">
-                {links.map((l) => (
-                  <li key={l.href}>
-                    <Link
-                      href={l.href}
-                      className="block text-sm text-white/90"
-                      onClick={() => setOpen(false)}
-                    >
-                      {l.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
         </div>
       </nav>
+
+      {/* ===== Mobile Drawer + Backdrop (Tailark-style) ===== */}
+      {open && (
+        <>
+          {/* Backdrop overlay */}
+          <div
+            className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm lg:hidden"
+            onClick={() => setOpen(false)}
+            aria-hidden="true"
+          />
+          {/* Drawer panel */}
+          <div className="fixed top-14 left-0 right-0 z-50 px-2 lg:hidden">
+            <div className="mx-auto max-w-6xl">
+              <div className="rounded-3xl border border-white/12 bg-[hsl(var(--background))]/95 p-6 shadow-2xl">
+                <ul className="space-y-6 text-base">
+                  {links.map((l) => (
+                    <li key={l.href}>
+                      <Link
+                        href={l.href}
+                        className="block text-white/90 duration-150 hover:text-[hsl(var(--accent-foreground))]"
+                        onClick={() => setOpen(false)}
+                      >
+                        {l.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
     </header>
   );
 }
