@@ -1,9 +1,11 @@
 import CoreHero from "@/components/core/Hero";
 
+export const metadata = { title: "BlackDeck WiKi — Home" };
+
 export default function Home() {
   return (
-    <div className="min-h-[calc(100dvh-3.5rem-64px)]">
+    <main className="overflow-hidden">
       <CoreHero />
-    </div>
+    </main>
   );
 }

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -32,50 +32,75 @@ function NavLink({ href, label }: { href: string; label: string }) {
 
 export default function SiteNavbar() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 10);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-[color:hsl(var(--background))]/70 backdrop-blur">
-      <div className="mx-auto max-w-6xl px-4 h-14 flex items-center justify-between gap-6">
-        <Link className="font-semibold tracking-wide" href="/">
-          BlackDeck WiKi
-        </Link>
+    <header className="fixed top-0 z-50 w-full">
+      <nav
+        data-state={open ? "active" : undefined}
+        className={`border-b transition-colors duration-150 ${
+          scrolled ? "bg-background/50 backdrop-blur-3xl" : "bg-transparent"
+        }`}
+      >
+        <div className="mx-auto max-w-6xl px-4">
+          <div className="relative flex h-14 items-center justify-between gap-6">
+            {/* Brand (left) */}
+            <Link
+              href="/"
+              aria-label="home"
+              className="font-semibold tracking-wide"
+            >
+              BlackDeck WiKi
+            </Link>
 
-        {/* Desktop */}
-        <nav className="hidden md:flex items-center gap-5">
-          {links.map((l) => (
-            <NavLink key={l.href} {...l} />
-          ))}
-        </nav>
+            {/* Desktop nav (right) */}
+            <ul className="hidden gap-6 lg:flex">
+              {links.map((l) => (
+                <li key={l.href}>
+                  <NavLink {...l} />
+                </li>
+              ))}
+            </ul>
 
-        {/* Mobile toggle */}
-        <Button
-          size="icon"
-          variant="ghost"
-          className="md:hidden"
-          onClick={() => setOpen((s) => !s)}
-          aria-label="Toggle menu"
-        >
-          {open ? <X size={20} /> : <Menu size={20} />}
-        </Button>
-      </div>
+            {/* Mobile toggle (right) */}
+            <Button
+              size="icon"
+              variant="ghost"
+              className="lg:hidden"
+              onClick={() => setOpen((s) => !s)}
+              aria-label={open ? "Close menu" : "Open menu"}
+            >
+              {open ? <X size={20} /> : <Menu size={20} />}
+            </Button>
+          </div>
 
-      {/* Mobile drawer */}
-      {open && (
-        <div className="md:hidden border-t border-white/10 bg-[color:hsl(var(--background))]/95">
-          <nav className="mx-auto max-w-6xl px-4 py-3 flex flex-col gap-3">
-            {links.map((l) => (
-              <Link
-                key={l.href}
-                href={l.href}
-                className="text-sm text-white/90"
-                onClick={() => setOpen(false)}
-              >
-                {l.label}
-              </Link>
-            ))}
-          </nav>
+          {/* Mobile drawer */}
+          {open && (
+            <div className="lg:hidden border-t border-white/10 bg-background/95">
+              <ul className="flex flex-col gap-4 px-4 py-4">
+                {links.map((l) => (
+                  <li key={l.href}>
+                    <Link
+                      href={l.href}
+                      className="block text-sm text-white/90"
+                      onClick={() => setOpen(false)}
+                    >
+                      {l.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
-      )}
+      </nav>
     </header>
   );
 }
