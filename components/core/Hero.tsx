@@ -10,7 +10,7 @@ export default function CoreHero() {
           fast, accurate, and beautiful.
         </h1>
 
-        <p className="mt-6 max-w-2xl text-lg text-white/80 animate-in fade-in-50 slide-in-from-bottom-2 duration-700 delay-150">
+        <p className="mt-6 max-w-2xl text-lg text-[var(--foreground)]/80 animate-in fade-in-50 slide-in-from-bottom-2 duration-700 delay-150">
           Heroes, units, artifacts, sets, and ascension — with clean data you
           can trust, plus practical tips for new and veteran players.
         </p>
@@ -20,7 +20,8 @@ export default function CoreHero() {
             <Button
               asChild
               size="lg"
-              className="rounded-xl px-5 bg-primary text-base"
+              variant="ghost"
+              className="rounded-xl px-5 text-base bg-[var(--muted)] text-[var(--muted-foreground)] hover:bg-[color-mix(in oklab,var(--muted) 90%,white 10%)]"
             >
               <a href="/heroes">Browse Heroes</a>
             </Button>
@@ -29,7 +30,7 @@ export default function CoreHero() {
             asChild
             size="lg"
             variant="ghost"
-            className="h-10.5 rounded-xl px-5 text-base"
+            className="h-10.5 rounded-xl px-5 text-base border border-accent"
           >
             <a href="/ascension">Ascension Costs</a>
           </Button>
