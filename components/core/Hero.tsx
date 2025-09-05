@@ -9,46 +9,24 @@ export default function CoreHero() {
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_60%_at_70%_20%,hsl(var(--accent)/0.20),transparent_60%)]"
       />
       <div className="mx-auto max-w-6xl px-4 py-12 md:py-16 relative">
-        <div className="grid md:grid-cols-2 gap-8">
-          <div className="space-y-4">
-            <h1 className="text-3xl md:text-4xl font-semibold">
-              A fast, beautiful fan WiKi for{" "}
-              <span className="text-[hsl(var(--accent))]">Black Deck</span>
-            </h1>
-            <p className="text-sm md:text-base text-white/80">
-              Clean, up-to-date info on heroes, units, artifacts, sets, and
-              ascension costs — with beginner guides and meta insights.
-            </p>
-            <div className="flex gap-3 pt-2">
-              <Button size="lg" asChild>
-                <a href="/heroes">Browse Heroes</a>
-              </Button>
-              <Button size="lg" variant="secondary" asChild>
-                <a href="/ascension">Ascension Costs</a>
-              </Button>
-            </div>
-          </div>
+        <div className="max-w-2xl space-y-5">
+          <h1 className="text-3xl md:text-4xl font-semibold leading-tight">
+            A fast, beautiful fan WiKi for{" "}
+            <span className="text-[hsl(var(--accent))]">Black Deck</span>
+          </h1>
 
-          {/* right card / image placeholder (Tailark-like split) */}
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
-            <div className="text-sm opacity-80">Quick links</div>
-            <ul className="mt-3 space-y-2 text-sm">
-              <li>
-                <a className="underline" href="/updates">
-                  Patch notes
-                </a>
-              </li>
-              <li>
-                <a className="underline" href="/guides">
-                  Beginner’s guide
-                </a>
-              </li>
-              <li>
-                <a className="underline" href="/artifacts">
-                  Artifacts overview
-                </a>
-              </li>
-            </ul>
+          <p className="text-sm md:text-base text-white/80">
+            Up-to-date info on heroes, units, artifacts, sets, and ascension —
+            plus beginner tips and meta insights.
+          </p>
+
+          <div className="flex flex-wrap gap-3 pt-1">
+            <Button size="lg" asChild>
+              <a href="/heroes">Browse Heroes</a>
+            </Button>
+            <Button size="lg" variant="secondary" asChild>
+              <a href="/ascension">Ascension Costs</a>
+            </Button>
           </div>
         </div>
       </div>
