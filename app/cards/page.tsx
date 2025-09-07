@@ -5,6 +5,6 @@ export const metadata: Metadata = {
   title: "Heroes | BlackDeck WiKi",
 };
 
-export default function HeroesPage() {
+export default function CardsPage() {
   return <HeroesClient />;
 }

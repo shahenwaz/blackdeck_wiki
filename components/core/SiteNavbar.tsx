@@ -7,12 +7,12 @@ import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const links = [
-  { href: "/heroes", label: "Heroes" },
-  { href: "/units", label: "Units" },
-  { href: "/artifacts", label: "Artifacts" },
-  { href: "/ascension", label: "Ascension" },
-  { href: "/updates", label: "Updates" },
-  { href: "/guides", label: "Guides" },
+  { href: "/", label: "HOME" },
+  { href: "/cards", label: "CARDS" },
+  { href: "/gameModes", label: "GAME MODES" },
+  { href: "/progression", label: "PROGRESSION" },
+  { href: "/updates", label: "UPDATES" },
+  { href: "/guides", label: "GUIDES" },
 ];
 
 function NavLink({ href, label }: { href: string; label: string }) {
@@ -22,7 +22,7 @@ function NavLink({ href, label }: { href: string; label: string }) {
     <Link
       href={href}
       className={[
-        "text-sm transition-colors",
+        "text-sm font-semibold transition-colors",
         active
           ? "text-white"
           : "text-white/80 hover:text-[hsl(var(--accent-foreground))]",
