@@ -18,7 +18,7 @@ export default function RootLayout({
     <html lang="en" className="dark" suppressHydrationWarning>
       <body className="min-h-dvh" suppressHydrationWarning>
         <SiteNavbar />
-        <main>{children}</main>
+        <main className="pt-12 md:pt-16">{children}</main>
         <footer className="border-t border-white/10">
           <div className="mx-auto max-w-6xl px-4 py-6 text-xs opacity-70">
             © <Year /> BlackDeck WiKi — Community project.

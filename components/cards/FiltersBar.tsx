@@ -51,7 +51,7 @@ export default function FiltersBar({
   ];
 
   return (
-    <div className="sticky top-0 z-20 -mx-4 mb-6 border-b border-white/10 bg-black/40 px-4 py-4 backdrop-blur supports-[backdrop-filter]:bg-black/30">
+    <div className="mb-6 border-b border-white/10 bg-black/40 px-4 py-4 backdrop-blur supports-[backdrop-filter]:bg-black/30">
       <div className="grid grid-cols-1 gap-3 md:grid-cols-12">
         <div className="md:col-span-3">
           <input
