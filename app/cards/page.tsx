@@ -1,10 +1,12 @@
-import type { Metadata } from "next";
-import HeroesClient from "./_client";
+import CardsClient from "./_client";
+import { cards } from "@/src/data/cards";
 
-export const metadata: Metadata = {
-  title: "Heroes | BlackDeck WiKi",
+export const metadata = {
+  title: "Cards | BlackDeck Wiki",
+  description:
+    "Browse Black Deck heroes and units across factions and rarities.",
 };
 
 export default function CardsPage() {
-  return <HeroesClient />;
+  return <CardsClient data={cards} />;
 }
