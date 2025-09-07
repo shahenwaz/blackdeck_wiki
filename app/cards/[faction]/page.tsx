@@ -14,8 +14,10 @@ export const metadata = {
   title: "Faction | Cards | BlackDeck Wiki",
 };
 
-export default function Page({ params }: { params: Params }) {
-  const id = params.faction.toUpperCase();
+export default async function Page({ params }: { params: Promise<Params> }) {
+  const { faction } = await params; // ✅ await params
+  const id = faction.toUpperCase();
+
   const filtered = cards.filter((c) => c.faction === id);
   return <CardsClient data={filtered} />;
 }
