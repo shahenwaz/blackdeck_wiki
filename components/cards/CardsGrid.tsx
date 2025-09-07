@@ -100,7 +100,7 @@ export default function CardsGrid({ data }: { data: Card[] }) {
             No cards match your filters.
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             {sorted.map((card) => (
               <CardTile key={card.id} card={card} onOpen={setOpen} />
             ))}
