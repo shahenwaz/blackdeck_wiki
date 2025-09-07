@@ -5,7 +5,7 @@ export type FactionMeta = {
   id: Faction;
   label: string;
   color: string;
-  icon: string; // path under /public/icons/factions/*
+  icon: string; // PNG under /public/icons/factions
 };
 
 export const FACTIONS: FactionMeta[] = [
