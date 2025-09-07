@@ -39,10 +39,11 @@ export default function CardTile({
           <Image
             src={card.portraitUrl}
             alt={card.name}
-            className="h-full w-full object-cover opacity-90"
-          >
-            {" "}
-          </Image>
+            fill // <-- key
+            sizes="96px" // image rendered at ~96px box
+            className="object-cover opacity-90" // no w/h classes when using fill
+            priority={false}
+          />
           {card.hero && (
             <span className="absolute left-1 top-1 rounded-md bg-yellow-400/90 px-1.5 py-0.5 text-[10px] font-bold text-black">
               HERO

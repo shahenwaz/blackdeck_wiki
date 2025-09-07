@@ -30,12 +30,15 @@ export default function CardModal({
 
         <div className="grid grid-cols-1 gap-5 p-5 md:grid-cols-[220px_1fr]">
           <div>
-            <div className="overflow-hidden rounded-xl">
+            <div className="relative aspect-[3/4] w-full overflow-hidden rounded-xl">
               <Image
                 src={card.portraitUrl}
                 alt={card.name}
-                className="h-full w-full object-cover"
-              ></Image>
+                fill
+                sizes="(max-width: 768px) 100vw, 220px" // ~220px column on desktop
+                className="object-cover"
+                priority={false}
+              />
             </div>
             <div className="mt-3 grid grid-cols-2 gap-2 text-xs">
               <span className="rounded-md bg-white/5 px-2 py-1">
