@@ -6,16 +6,20 @@ import { FACTIONS } from "@/lib/factions";
 import type { Card } from "@/src/types/cards";
 import Image from "next/image";
 
-function CountPill({ n }: { n: number }) {
+/** Modern count pill with colored ring + tight glow, no underline */
+function CountPill({ n, color }: { n: number; color?: string }) {
+  const ring = color ? `${color}88` : "rgba(255,255,255,.18)";
+  const glow = color ? `${color}33` : "rgba(0,0,0,0)";
   return (
     <span
-      className="min-w-8 inline-flex items-center justify-center rounded-md px-2 py-0.5 text-[11px] font-semibold"
+      className="min-w-8 inline-flex items-center justify-center rounded-full px-2.5 py-1 text-[11px] font-semibold text-white/90 tabular-nums no-underline"
       style={{
         background:
-          "linear-gradient(180deg, rgba(255,255,255,.16), rgba(255,255,255,.06))",
-        boxShadow:
-          "inset 0 1px 0 rgba(255,255,255,.35), inset 0 -1px 0 rgba(0,0,0,.35)",
-        border: "1px solid rgba(255,255,255,.14)",
+          "linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04))",
+        border: `1px solid ${ring}`,
+        boxShadow: `0 2px 6px ${glow}, inset 0 1px 0 rgba(255,255,255,.20)`,
+        backdropFilter: "blur(6px)",
+        textDecoration: "none", // safety against global CSS
       }}
     >
       {n}
@@ -23,6 +27,7 @@ function CountPill({ n }: { n: number }) {
   );
 }
 
+/** Icon chip: dimmed tint + heavy vignette, PNG on top */
 function FactionIcon({
   label,
   color,
@@ -34,26 +39,37 @@ function FactionIcon({
 }) {
   return (
     <span
-      className="relative grid h-12 w-12 place-items-center rounded-2xl shadow-sm"
-      style={{ background: `${color}` }}
+      className="relative grid h-12 w-12 place-items-center rounded-2xl shadow-sm overflow-hidden"
+      style={{
+        background: color,
+        filter: "saturate(.85) brightness(.9)",
+      }}
     >
-      {/* glossy highlight */}
+      {/* dark vignette */}
       <span
         className="pointer-events-none absolute inset-0 rounded-2xl"
         style={{
           background:
-            "radial-gradient(100% 60% at 30% 0%, rgba(255,255,255,.45) 0%, rgba(255,255,255,.15) 35%, rgba(255,255,255,0) 70%)",
+            "radial-gradient(100% 120% at 50% 50%, rgba(0,0,0,.40) 0%, rgba(0,0,0,.55) 70%, rgba(0,0,0,.65) 100%)",
+        }}
+      />
+      {/* top gloss */}
+      <span
+        className="pointer-events-none absolute inset-0 rounded-2xl"
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(255,255,255,.14) 0%, rgba(255,255,255,0) 55%)",
+          mixBlendMode: "screen",
         }}
       />
       {icon ? (
         <Image
           src={icon}
           alt={label}
-          width={28} // ✅ explicit dimensions to avoid runtime error
+          width={28}
           height={28}
-          className="relative h-7 w-7 object-contain"
-          priority={false}
-          sizes="48px" // icon box ~48px (= h-12 w-12), image is 28px
+          className="relative h-7 w-7 object-contain opacity-95"
+          sizes="48px"
         />
       ) : (
         <span className="relative text-[12px] font-extrabold tracking-wide text-black/90">
@@ -74,7 +90,7 @@ export default function FactionList({ allCards }: { allCards: Card[] }) {
   }, {});
   const total = Object.values(counts).reduce((a, b) => a + (b ?? 0), 0);
 
-  // active key (null for /cards)
+  // active key (ALL for /cards)
   const activeKey =
     pathname === "/cards"
       ? "ALL"
@@ -82,16 +98,17 @@ export default function FactionList({ allCards }: { allCards: Card[] }) {
       ? pathname.split("/")[2].toUpperCase()
       : "ALL";
 
-  // base tile style (glossy card)
+  // Tile styles
   const baseTile =
-    "group relative flex items-center justify-between rounded-2xl border px-4 py-3 transition";
+    "group relative flex items-center justify-between rounded-2xl border px-4 py-3 transition no-underline hover:no-underline focus:no-underline";
   const idleGlass =
-    "bg-white/5 text-white/85 border-white/10 hover:bg-white/10";
-  const activeTile = "bg-white text-black border-white/20";
+    "bg-white/5 text-white/90 border-white/10 hover:bg-white/10";
+  const activeTile =
+    "bg-white/[.07] text-white border-white/15 shadow-[inset_0_1px_0_rgba(255,255,255,.12)]";
 
   return (
     <nav className="hidden lg:block lg:w-72 lg:shrink-0">
-      <div className="space-y-2">
+      <div className="space-y-3">
         {/* === All Cards === */}
         <Link
           href="/cards"
@@ -99,20 +116,21 @@ export default function FactionList({ allCards }: { allCards: Card[] }) {
             baseTile,
             activeKey === "ALL" ? activeTile : idleGlass,
           ].join(" ")}
+          style={
+            activeKey === "ALL"
+              ? {
+                  boxShadow:
+                    "inset 0 0 0 2px rgba(255,255,255,.25), inset 0 1px 0 rgba(255,255,255,.12)",
+                  textDecoration: "none",
+                }
+              : { textDecoration: "none" }
+          }
         >
-          {/* left accent (hover) */}
-          <span
-            className="pointer-events-none absolute inset-y-0 left-0 w-1.5 rounded-l-2xl opacity-0 transition-opacity group-hover:opacity-100"
-            style={{
-              background:
-                "linear-gradient(180deg, rgba(255,255,255,.7), rgba(255,255,255,0))",
-            }}
-          />
           <span className="flex items-center gap-3">
             <span className="grid h-12 w-12 place-items-center rounded-2xl bg-white/85 text-black shadow-sm">
               <span className="text-[12px] font-extrabold">ALL</span>
             </span>
-            <span className="font-semibold">All Cards</span>
+            <span className="font-semibold no-underline">All Cards</span>
           </span>
           <CountPill n={total} />
         </Link>
@@ -128,22 +146,18 @@ export default function FactionList({ allCards }: { allCards: Card[] }) {
               className={[baseTile, active ? activeTile : idleGlass].join(" ")}
               style={
                 active
-                  ? { boxShadow: `inset 0 0 0 2px ${f.color}33` }
-                  : undefined
+                  ? {
+                      boxShadow: `inset 0 0 0 2px ${f.color}, 0 0 4px ${f.color}44`,
+                      textDecoration: "none",
+                    }
+                  : { textDecoration: "none" }
               }
             >
-              {/* left accent in faction color */}
-              <span
-                className="pointer-events-none absolute inset-y-0 left-0 w-1.5 rounded-l-2xl opacity-0 transition-opacity group-hover:opacity-100"
-                style={{
-                  background: `linear-gradient(180deg, ${f.color}, rgba(0,0,0,0))`,
-                }}
-              />
               <span className="flex items-center gap-3">
                 <FactionIcon label={f.label} color={f.color} icon={f.icon} />
-                <span className="font-semibold">{f.label}</span>
+                <span className="font-semibold no-underline">{f.label}</span>
               </span>
-              <CountPill n={counts[f.id] ?? 0} />
+              <CountPill n={counts[f.id] ?? 0} color={f.color} />
             </Link>
           );
         })}
