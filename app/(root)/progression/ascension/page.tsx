@@ -1,0 +1,30 @@
+export const metadata = {
+  title: "Ascension — BlackDeck WiKi",
+  description:
+    "Learn exact soulstone costs by rank + calculator and where to farm.",
+  openGraph: { title: "Ascension — BlackDeck WiKi", type: "article" },
+};
+
+export default function Page() {
+  return (
+    <main className="container py-8 space-y-6 animate-fadeIn">
+      <header className="space-y-2">
+        <h1 className="text-3xl sm:text-4xl font-bold">Ascension</h1>
+        <p className="text-sm opacity-80 max-w-2xl">
+          Ascend cards to unlock stats/skills. Each rank uses the SAME costs per
+          star for all cards of that rank. You always need Clear stones + a
+          second set based on the card’s trait (Melee/Ranged/Hero).
+        </p>
+      </header>
+
+      <section className="grid xl:grid-cols-2 gap-4">
+        <div className="rounded-2xl border p-4">
+          Ascension tables — coming next
+        </div>
+        <div className="rounded-2xl border p-4">Calculator — coming next</div>
+      </section>
+
+      <div className="rounded-2xl border p-4">Dungeon guide — coming next</div>
+    </main>
+  );
+}
