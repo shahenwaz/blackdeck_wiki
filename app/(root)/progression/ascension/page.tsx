@@ -1,3 +1,5 @@
+import AscensionTable from "@/components/progression/AscensionTable";
+
 export const metadata = {
   title: "Ascension — BlackDeck WiKi",
   description:
@@ -18,12 +20,14 @@ export default function Page() {
       </header>
 
       <section className="grid xl:grid-cols-2 gap-4">
-        <div className="rounded-2xl border p-4">
-          Ascension tables — coming next
-        </div>
-        <div className="rounded-2xl border p-4">Calculator — coming next</div>
+        <AscensionTable rank="Uncommon" trait="Melee" />
+        <AscensionTable rank="Rare" trait="Ranged" />
       </section>
-
+      <section className="grid xl:grid-cols-2 gap-4">
+        <AscensionTable rank="Epic" trait="Hero" />
+        <AscensionTable rank="Legendary" trait="Ranged" />
+      </section>
+      <div className="rounded-2xl border p-4">Calculator — coming next</div>
       <div className="rounded-2xl border p-4">Dungeon guide — coming next</div>
     </main>
   );
