@@ -1,5 +1,6 @@
 import AscensionTable from "@/components/progression/AscensionTable";
 import AscensionCalculator from "@/components/progression/AscensionCalculator";
+import DungeonGuide from "@/components/progression/DungeonGuide";
 
 export const metadata = {
   title: "Ascension — BlackDeck WiKi",
@@ -31,7 +32,7 @@ export default function Page() {
       <div className="rounded-2xl border p-4">
         <AscensionCalculator />
       </div>
-      <div className="rounded-2xl border p-4">Dungeon guide — coming next</div>
+      <DungeonGuide />
     </main>
   );
 }
