@@ -1,42 +1,67 @@
 "use client";
-import type {
-  AscensionTable,
-  Rank,
-  StarStep,
-  Trait,
-  Tier,
-} from "@/src/data/ascension";
-import { ASCENSION_COSTS, DUNGEONS } from "@/src/data/ascension";
+import Image from "next/image";
+import type { Rank, Trait, StarStep, IconSet } from "@/src/data/ascension";
+import { ASCENSION_COSTS, ICONS } from "@/src/data/ascension";
 
-const tiers: Tier[] = ["lesser", "greater", "grand"];
+// Typed icon lookup per trait (no `any`)
+const ICON_BY_TRAIT: Record<Trait, IconSet> = {
+  Melee: ICONS.melee,
+  Ranged: ICONS.ranged,
+  Hero: ICONS.hero,
+} as const;
+
+function HeaderIcon({ src, title }: { src: string; title: string }) {
+  return (
+    <div className="flex items-center gap-2">
+      <Image
+        src={src}
+        alt={title}
+        title={title}
+        width={24}
+        height={24}
+        className="h-6 w-6 object-contain"
+      />
+      <span className="sr-only">{title}</span>
+    </div>
+  );
+}
+
+// Show ascended stars up to 7 (since steps go 1→2 ... 6→7)
+function StepStars({ to }: { to: 2 | 3 | 4 | 5 | 6 | 7 }) {
+  return (
+    <div className="flex items-center gap-1">
+      {Array.from({ length: to }).map((_, i) => (
+        <Image
+          key={i}
+          src={ICONS.star}
+          alt={`${to} star`}
+          width={20}
+          height={20}
+          className="h-5 w-5 object-contain"
+        />
+      ))}
+    </div>
+  );
+}
 
 export default function AscensionTable({
   rank,
   trait,
+  title,
 }: {
   rank: Rank;
   trait: Trait;
+  title: string;
 }) {
   const data = ASCENSION_COSTS[rank];
-  const total = {
-    clear: { lesser: 0, greater: 0, grand: 0 },
-    trait: { lesser: 0, greater: 0, grand: 0 },
-  };
-
-  (Object.keys(data) as unknown as StarStep[]).forEach((s) => {
-    tiers.forEach((t) => {
-      total.clear[t] += data[s].clear[t];
-      total.trait[t] += data[s].trait[t];
-    });
-  });
 
   return (
     <div className="rounded-2xl border p-4">
-      <div className="flex items-center justify-between mb-3">
-        <h3 className="text-lg font-semibold">{rank} — Ascension Costs</h3>
-        <div className="text-xs opacity-80">
-          Farm: {DUNGEONS.Clear.name} + {DUNGEONS[trait].name}
-        </div>
+      <div className="mb-3 flex items-center justify-between">
+        <h3 className="text-lg font-semibold">{title}</h3>
+        <span className="text-xs opacity-70">
+          {rank} • {trait}
+        </span>
       </div>
 
       <div className="overflow-x-auto">
@@ -44,41 +69,78 @@ export default function AscensionTable({
           <thead>
             <tr className="border-b">
               <th className="py-2 text-left">Step</th>
-              <th className="py-2 text-left">Clear (L/G/Gr)</th>
-              <th className="py-2 text-left">{trait} (L/G/Gr)</th>
+
+              {/* Clear stones */}
+              <th className="py-2 text-left">
+                <HeaderIcon
+                  src={ICONS.clear.lesser}
+                  title="Clear Lesser Soulstone"
+                />
+              </th>
+              <th className="py-2 text-left">
+                <HeaderIcon
+                  src={ICONS.clear.greater}
+                  title="Clear Greater Soulstone"
+                />
+              </th>
+              <th className="py-2 text-left">
+                <HeaderIcon
+                  src={ICONS.clear.grand}
+                  title="Clear Grand Soulstone"
+                />
+              </th>
+
+              {/* Trait stones */}
+              <th className="py-2 text-left">
+                <HeaderIcon
+                  src={ICON_BY_TRAIT[trait].lesser}
+                  title={`${trait} Lesser Soulstone`}
+                />
+              </th>
+              <th className="py-2 text-left">
+                <HeaderIcon
+                  src={ICON_BY_TRAIT[trait].greater}
+                  title={`${trait} Greater Soulstone`}
+                />
+              </th>
+              <th className="py-2 text-left">
+                <HeaderIcon
+                  src={ICON_BY_TRAIT[trait].grand}
+                  title={`${trait} Grand Soulstone`}
+                />
+              </th>
             </tr>
           </thead>
+
           <tbody>
-            {[1, 2, 3, 4, 5].map((s) => {
-              const step = s as StarStep;
+            {[1, 2, 3, 4, 5, 6].map((s) => {
+              const step = s as StarStep; // 1..6 (meaning 1★→2★ ... 6★→7★)
+              const to = (s + 1) as 2 | 3 | 4 | 5 | 6;
               return (
                 <tr key={s} className="border-b">
                   <td className="py-2">
-                    {s}★ → {s + 1}★
+                    <StepStars to={to} />
                   </td>
-                  <td className="py-2">
-                    {tiers.map((t) => data[step].clear[t]).join(" / ")}
-                  </td>
-                  <td className="py-2">
-                    {tiers.map((t) => data[step].trait[t]).join(" / ")}
-                  </td>
+
+                  {/* Clear */}
+                  <td className="py-2">{data[step].clear.lesser}</td>
+                  <td className="py-2">{data[step].clear.greater}</td>
+                  <td className="py-2">{data[step].clear.grand}</td>
+
+                  {/* Trait */}
+                  <td className="py-2">{data[step].trait.lesser}</td>
+                  <td className="py-2">{data[step].trait.greater}</td>
+                  <td className="py-2">{data[step].trait.grand}</td>
                 </tr>
               );
             })}
-            <tr>
-              <td className="py-2 font-medium">Total (1★ → 6★)</td>
-              <td className="py-2">
-                {tiers.map((t) => total.clear[t]).join(" / ")}
-              </td>
-              <td className="py-2">
-                {tiers.map((t) => total.trait[t]).join(" / ")}
-              </td>
-            </tr>
           </tbody>
         </table>
       </div>
+
       <p className="mt-2 text-xs opacity-70">
-        Fill numbers in <code>src/data/ascension.ts</code>.
+        Costs are identical across cards of the same rank. Fill exact values in{" "}
+        <code>src/data/ascension.ts</code>.
       </p>
     </div>
   );
