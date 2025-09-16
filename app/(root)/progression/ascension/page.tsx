@@ -37,7 +37,7 @@ export default function Page() {
         items={[
           {
             id: "hero",
-            label: "HERO ASCENSION",
+            label: "HEROES",
             icon: <TabIcon src="/images/icons/hero.png" />,
             content: (
               <div className="grid xl:grid-cols-2 gap-4">
@@ -53,7 +53,7 @@ export default function Page() {
           },
           {
             id: "melee",
-            label: "MELEE UNITS ASCENSION",
+            label: "MELEE UNITS",
             icon: <TabIcon src="/images/icons/unit.png" />,
             content: (
               <div className="grid xl:grid-cols-2 gap-4">
@@ -82,7 +82,7 @@ export default function Page() {
           },
           {
             id: "ranged",
-            label: "RANGED UNITS ASCENSION",
+            label: "RANGED UNITS",
             icon: <TabIcon src="/images/icons/unit.png" />,
             content: (
               <div className="grid xl:grid-cols-2 gap-4">

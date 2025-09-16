@@ -56,7 +56,7 @@ export default function AscensionTable({
   const data = ASCENSION_COSTS[rank];
 
   return (
-    <div className="rounded-2xl border p-4">
+    <div className="rounded-2xl border-t-4 border-[color:var(--input)] p-4 bg-[var(--card)]">
       <div className="mb-3 flex items-center justify-between">
         <h3 className="text-lg font-semibold">{title}</h3>
         <span className="text-xs opacity-70">
@@ -67,7 +67,7 @@ export default function AscensionTable({
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b">
+            <tr className="border-b-2 border-[color:var(--input)]">
               <th className="py-2 text-left">Step</th>
 
               {/* Clear stones */}
@@ -116,7 +116,7 @@ export default function AscensionTable({
             {[1, 2, 3, 4, 5, 6].map((s) => {
               const step = s as StarStep;
               return (
-                <tr key={s} className="border-b">
+                <tr key={s} className="border-b border-[color:var(--border)]">
                   <td className="py-2">
                     <StepStars to={s as 1 | 2 | 3 | 4 | 5 | 6} />
                   </td>

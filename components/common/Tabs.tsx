@@ -5,7 +5,7 @@ export type TabItem = {
   id: string;
   label: string;
   content: React.ReactNode;
-  /** Optional icon before the label (png <img />, lucide, react-icons, etc.) */
+  /** Optional icon before the label (e.g., <Image />, lucide, etc.) */
   icon?: React.ReactNode;
 };
 
@@ -60,10 +60,22 @@ export default function Tabs({
         role="tablist"
         aria-orientation="horizontal"
         onKeyDown={onKeyDown}
-        className="mb-4 flex flex-wrap gap-2 rounded-xl border p-1"
+        className="mb-4 flex flex-wrap gap-2 rounded-2xl border-x-4 border-[color:var(--input)] p-2 bg-[var(--card)]"
       >
         {items.map((t) => {
           const isActive = t.id === active;
+
+          const base =
+            "relative inline-flex items-center gap-2 rounded-xl px-3 py-2 " +
+            "text-sm border select-none transition-colors " +
+            "focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]";
+
+          const cls = isActive
+            ? // Active: pill bg, crisper border, subtle primary underline
+              `${base} bg-[var(--muted)] border-[color:var(--ring)] font-medium`
+            : // Inactive: soft hover
+              `${base} border-[color:var(--border)] hover:bg-[color:var(--muted)]/60`;
+
           return (
             <button
               key={t.id}
@@ -74,13 +86,7 @@ export default function Tabs({
               aria-controls={`${t.id}-panel`}
               tabIndex={isActive ? 0 : -1}
               onClick={() => setActive(t.id)}
-              className={`inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition
-                focus:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--primary))]
-                ${
-                  isActive
-                    ? "bg-[hsl(var(--muted))] font-medium shadow-sm"
-                    : "hover:bg-[hsl(var(--muted))]/70"
-                }`}
+              className={cls}
             >
               {t.icon ? (
                 <span
@@ -90,7 +96,7 @@ export default function Tabs({
                   {t.icon}
                 </span>
               ) : null}
-              {t.label}
+              <span>{t.label}</span>
             </button>
           );
         })}
