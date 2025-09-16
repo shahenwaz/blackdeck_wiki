@@ -60,21 +60,23 @@ export default function Tabs({
         role="tablist"
         aria-orientation="horizontal"
         onKeyDown={onKeyDown}
-        className="mb-4 flex flex-wrap gap-2 rounded-2xl border-x-4 border-[color:var(--input)] p-2 bg-[var(--card)]"
+        // centered cluster, comfy gutters, never wraps
+        className="mb-4 rounded-2xl border-x-4 border-[color:var(--input)] bg-[var(--card)]
+                   px-3 py-2 flex flex-nowrap items-center justify-center gap-2 sm:gap-5"
       >
         {items.map((t) => {
           const isActive = t.id === active;
 
           const base =
-            "relative inline-flex items-center gap-2 rounded-xl px-3 py-2 " +
-            "text-sm border select-none transition-colors " +
+            "relative inline-flex items-center gap-2 rounded-xl " +
+            "px-2 sm:px-3 py-1.5 sm:py-2 " + // smaller on mobile
+            "text-[11px] sm:text-xs md:text-sm whitespace-nowrap " + // no wrap
+            "border select-none transition-colors " +
             "focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]";
 
           const cls = isActive
-            ? // Active: pill bg, crisper border, subtle primary underline
-              `${base} bg-[var(--muted)] border-[color:var(--ring)] font-medium`
-            : // Inactive: soft hover
-              `${base} border-[color:var(--border)] hover:bg-[color:var(--muted)]/60`;
+            ? `${base} bg-[var(--muted)] border-[color:var(--ring)] font-medium`
+            : `${base} border-[color:var(--border)] hover:bg-[color:var(--muted)]/60`;
 
           return (
             <button
@@ -91,12 +93,12 @@ export default function Tabs({
               {t.icon ? (
                 <span
                   aria-hidden="true"
-                  className="grid place-items-center size-4"
+                  className="inline-flex items-center justify-center shrink-0 size-3 sm:size-4"
                 >
                   {t.icon}
                 </span>
               ) : null}
-              <span>{t.label}</span>
+              <span className="tracking-wide leading-none">{t.label}</span>
             </button>
           );
         })}

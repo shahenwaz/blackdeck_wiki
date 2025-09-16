@@ -10,7 +10,7 @@ const TabIcon = ({ src, alt = "" }: { src: string; alt?: string }) => (
     width={18}
     height={18}
     aria-hidden={alt === ""}
-    className="h-[18px] w-[18px] object-contain"
+    className="block h-[18px] w-[18px] object-contain"
   />
 );
 
