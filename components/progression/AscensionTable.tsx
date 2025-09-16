@@ -136,8 +136,7 @@ export default function AscensionTable({
       </div>
 
       <p className="mt-2 text-xs opacity-70">
-        Costs are identical across cards of the same rank. Fill exact values in{" "}
-        <code>src/data/ascension.ts</code>.
+        Costs are identical across cards of the same rank.
       </p>
     </div>
   );

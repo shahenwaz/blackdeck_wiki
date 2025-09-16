@@ -41,13 +41,13 @@ export default function Page() {
             icon: <TabIcon src="/images/icons/hero.png" />,
             content: (
               <div className="grid xl:grid-cols-2 gap-4">
-                <AscensionTable rank="Rare" trait="Hero" title="Hero — Rare" />
-                <AscensionTable rank="Epic" trait="Hero" title="Hero — Epic" />
                 <AscensionTable
                   rank="Legendary"
                   trait="Hero"
                   title="Hero — Legendary"
                 />
+                <AscensionTable rank="Epic" trait="Hero" title="Hero — Epic" />
+                <AscensionTable rank="Rare" trait="Hero" title="Hero — Rare" />
               </div>
             ),
           },
