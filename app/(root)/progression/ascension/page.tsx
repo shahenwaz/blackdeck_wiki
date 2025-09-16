@@ -1,5 +1,4 @@
 import AscensionTable from "@/components/progression/AscensionTable";
-import AscensionCalculator from "@/components/progression/AscensionCalculator";
 import DungeonGuide from "@/components/progression/DungeonGuide";
 
 export const metadata = {
@@ -20,7 +19,6 @@ export default function Page() {
           second set based on the card’s trait (Melee/Ranged/Hero).
         </p>
       </header>
-
       <section className="grid xl:grid-cols-2 gap-4">
         <AscensionTable rank="Uncommon" trait="Melee" />
         <AscensionTable rank="Rare" trait="Ranged" />
@@ -29,9 +27,8 @@ export default function Page() {
         <AscensionTable rank="Epic" trait="Hero" />
         <AscensionTable rank="Legendary" trait="Ranged" />
       </section>
-      <div className="rounded-2xl border p-4">
-        <AscensionCalculator />
-      </div>
+      {/* Tabs + tables come next */}
+      <div id="ascension-tabs" />
       <DungeonGuide />
     </main>
   );
