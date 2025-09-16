@@ -26,8 +26,8 @@ function HeaderIcon({ src, title }: { src: string; title: string }) {
   );
 }
 
-// Show ascended stars up to 7 (since steps go 1→2 ... 6→7)
-function StepStars({ to }: { to: 2 | 3 | 4 | 5 | 6 | 7 }) {
+// Renders star icons for "to" value (1-6)
+function StepStars({ to }: { to: 1 | 2 | 3 | 4 | 5 | 6 }) {
   return (
     <div className="flex items-center gap-1">
       {Array.from({ length: to }).map((_, i) => (
@@ -114,19 +114,16 @@ export default function AscensionTable({
 
           <tbody>
             {[1, 2, 3, 4, 5, 6].map((s) => {
-              const step = s as StarStep; // 1..6 (meaning 1★→2★ ... 6★→7★)
-              const to = (s + 1) as 2 | 3 | 4 | 5 | 6;
+              const step = s as StarStep;
               return (
                 <tr key={s} className="border-b">
                   <td className="py-2">
-                    <StepStars to={to} />
+                    <StepStars to={s as 1 | 2 | 3 | 4 | 5 | 6} />
                   </td>
-
                   {/* Clear */}
                   <td className="py-2">{data[step].clear.lesser}</td>
                   <td className="py-2">{data[step].clear.greater}</td>
                   <td className="py-2">{data[step].clear.grand}</td>
-
                   {/* Trait */}
                   <td className="py-2">{data[step].trait.lesser}</td>
                   <td className="py-2">{data[step].trait.greater}</td>
