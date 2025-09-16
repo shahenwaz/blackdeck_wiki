@@ -1,7 +1,7 @@
 export type Rank = "Uncommon" | "Rare" | "Epic" | "Legendary";
 export type Trait = "Melee" | "Ranged" | "Hero";
 export type Tier = "lesser" | "greater" | "grand";
-export type StarStep = 1 | 2 | 3 | 4 | 5 | 6; // 1★→2★ .. 4★→5★
+export type StarStep = 1 | 2 | 3 | 4 | 5 | 6; // 1★→2★ .. 5★→6★
 
 export interface SoulCost {
   lesser: number;
@@ -38,8 +38,7 @@ export const ASCENSION_COSTS: AscensionTable = {
   },
 };
 
-export const MIX_RATIOS = { lesserToGreater: 10, greaterToGrand: 10 };
-
+// Dungeon registry (you kept uppercase names; preserving)
 export const DUNGEONS: Record<"Clear" | Trait, { name: string; slug: string }> =
   {
     Clear: { name: "FORT OF SOULS", slug: "fort-of-souls" },
@@ -47,3 +46,38 @@ export const DUNGEONS: Record<"Clear" | Trait, { name: string; slug: string }> =
     Ranged: { name: "RANGED OUTPOST", slug: "ranged-outpost" },
     Hero: { name: "HERO'S CASTLE", slug: "heroes-castle" },
   };
+
+/** Icon registry
+ *  Drop your PNGs into /public/images/souls/ or adjust paths below.
+ */
+export type IconSet = Record<Tier, string>;
+export const ICONS: {
+  clear: IconSet;
+  melee: IconSet;
+  ranged: IconSet;
+  hero: IconSet;
+  star: string;
+} = {
+  clear: {
+    lesser: "/images/souls/soulstone_lesser_clear.png",
+    greater: "/images/souls/soulstone_lesser_clear.png",
+    grand: "/images/souls/soulstone_lesser_clear.png",
+  },
+  melee: {
+    lesser: "/images/souls/soulstone_lesser_melee.png",
+    greater: "/images/souls/soulstone_lesser_melee.png",
+    grand: "/images/souls/soulstone_lesser_melee.png",
+  },
+  ranged: {
+    lesser: "/images/souls/soulstone_lesser_ranged.png",
+    greater: "/images/souls/soulstone_lesser_ranged.png",
+    grand: "/images/souls/soulstone_lesser_ranged.png",
+  },
+  hero: {
+    lesser: "/images/souls/soulstone_lesser_hero.png",
+    greater: "/images/souls/soulstone_lesser_hero.png",
+    grand: "/images/souls/soulstone_lesser_hero.png",
+  },
+  // Ascended star image used for the “step” column visuals
+  star: "/images/icons/ascended_star.png",
+};
