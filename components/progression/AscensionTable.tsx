@@ -20,17 +20,17 @@ const RANK_CLASS: Record<Rank, string> = {
 
 function HeaderIcon({ src, title }: { src: string; title: string }) {
   return (
-    <div className="flex items-center gap-2">
+    <>
       <Image
         src={src}
-        alt={title}
-        title={title}
+        alt="" // decorative; screen reader gets the sr-only label
+        aria-hidden
         width={24}
         height={24}
-        className="h-6 w-6 object-contain"
+        className="block mx-auto h-5 w-5 sm:h-6 sm:w-6 object-contain"
       />
       <span className="sr-only">{title}</span>
-    </div>
+    </>
   );
 }
 
@@ -92,19 +92,19 @@ export default function AscensionTable({
               <th className="py-2 text-left">Step</th>
 
               {/* Clear stones */}
-              <th className="py-2 text-left">
+              <th className="py-2 text-center">
                 <HeaderIcon
                   src={ICONS.clear.lesser}
                   title="Clear Lesser Soulstone"
                 />
               </th>
-              <th className="py-2 text-left">
+              <th className="py-2 text-center">
                 <HeaderIcon
                   src={ICONS.clear.greater}
                   title="Clear Greater Soulstone"
                 />
               </th>
-              <th className="py-2 text-left">
+              <th className="py-2 text-center">
                 <HeaderIcon
                   src={ICONS.clear.grand}
                   title="Clear Grand Soulstone"
@@ -112,19 +112,19 @@ export default function AscensionTable({
               </th>
 
               {/* Trait stones */}
-              <th className="py-2 text-left">
+              <th className="py-2 text-center">
                 <HeaderIcon
                   src={ICON_BY_TRAIT[trait].lesser}
                   title={`${trait} Lesser Soulstone`}
                 />
               </th>
-              <th className="py-2 text-left">
+              <th className="py-2 text-center">
                 <HeaderIcon
                   src={ICON_BY_TRAIT[trait].greater}
                   title={`${trait} Greater Soulstone`}
                 />
               </th>
-              <th className="py-2 text-left">
+              <th className="py-2 text-center">
                 <HeaderIcon
                   src={ICON_BY_TRAIT[trait].grand}
                   title={`${trait} Grand Soulstone`}
@@ -142,13 +142,25 @@ export default function AscensionTable({
                     <StepStars to={s as 1 | 2 | 3 | 4 | 5 | 6} />
                   </td>
                   {/* Clear */}
-                  <td className="py-2">{data[step].clear.lesser}</td>
-                  <td className="py-2">{data[step].clear.greater}</td>
-                  <td className="py-2">{data[step].clear.grand}</td>
+                  <td className="py-2 text-center tabular-nums">
+                    {data[step].clear.lesser}
+                  </td>
+                  <td className="py-2 text-center tabular-nums">
+                    {data[step].clear.greater}
+                  </td>
+                  <td className="py-2 text-center tabular-nums">
+                    {data[step].clear.grand}
+                  </td>
                   {/* Trait */}
-                  <td className="py-2">{data[step].trait.lesser}</td>
-                  <td className="py-2">{data[step].trait.greater}</td>
-                  <td className="py-2">{data[step].trait.grand}</td>
+                  <td className="py-2 text-center tabular-nums">
+                    {data[step].trait.lesser}
+                  </td>
+                  <td className="py-2 text-center tabular-nums">
+                    {data[step].trait.greater}
+                  </td>
+                  <td className="py-2 text-center tabular-nums">
+                    {data[step].trait.grand}
+                  </td>
                 </tr>
               );
             })}

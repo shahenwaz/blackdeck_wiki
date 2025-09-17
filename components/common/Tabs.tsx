@@ -71,7 +71,7 @@ export default function Tabs({
             "relative inline-flex items-center gap-2 rounded-xl " +
             "px-2 sm:px-3 py-1.5 sm:py-2 " + // smaller on mobile
             "text-[11px] sm:text-xs md:text-sm whitespace-nowrap " + // no wrap
-            "border select-none transition-colors " +
+            "border select-none transition-colors cursor-pointer " +
             "focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]";
 
           const cls = isActive
