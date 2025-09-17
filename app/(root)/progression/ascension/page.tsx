@@ -58,14 +58,9 @@ export default function Page() {
             content: (
               <div className="grid xl:grid-cols-2 gap-4">
                 <AscensionTable
-                  rank="Uncommon"
+                  rank="Legendary"
                   trait="Melee"
-                  title="Melee — Uncommon"
-                />
-                <AscensionTable
-                  rank="Rare"
-                  trait="Melee"
-                  title="Melee — Rare"
+                  title="Melee — Legendary"
                 />
                 <AscensionTable
                   rank="Epic"
@@ -73,9 +68,14 @@ export default function Page() {
                   title="Melee — Epic"
                 />
                 <AscensionTable
-                  rank="Legendary"
+                  rank="Rare"
                   trait="Melee"
-                  title="Melee — Legendary"
+                  title="Melee — Rare"
+                />
+                <AscensionTable
+                  rank="Uncommon"
+                  trait="Melee"
+                  title="Melee — Uncommon"
                 />
               </div>
             ),
@@ -87,14 +87,9 @@ export default function Page() {
             content: (
               <div className="grid xl:grid-cols-2 gap-4">
                 <AscensionTable
-                  rank="Uncommon"
+                  rank="Legendary"
                   trait="Ranged"
-                  title="Ranged — Uncommon"
-                />
-                <AscensionTable
-                  rank="Rare"
-                  trait="Ranged"
-                  title="Ranged — Rare"
+                  title="Ranged — Legendary"
                 />
                 <AscensionTable
                   rank="Epic"
@@ -102,9 +97,14 @@ export default function Page() {
                   title="Ranged — Epic"
                 />
                 <AscensionTable
-                  rank="Legendary"
+                  rank="Rare"
                   trait="Ranged"
-                  title="Ranged — Legendary"
+                  title="Ranged — Rare"
+                />
+                <AscensionTable
+                  rank="Uncommon"
+                  trait="Ranged"
+                  title="Ranged — Uncommon"
                 />
               </div>
             ),

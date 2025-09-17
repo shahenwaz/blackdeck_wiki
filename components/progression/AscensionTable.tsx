@@ -3,11 +3,19 @@ import Image from "next/image";
 import type { Rank, Trait, StarStep, IconSet } from "@/src/data/ascension";
 import { ASCENSION_COSTS, ICONS } from "@/src/data/ascension";
 
-// Typed icon lookup per trait (no `any`)
+// Typed icon lookup per trait
 const ICON_BY_TRAIT: Record<Trait, IconSet> = {
   Melee: ICONS.melee,
   Ranged: ICONS.ranged,
   Hero: ICONS.hero,
+} as const;
+
+// CSS class per rank for border color (defined in globals.css)
+const RANK_CLASS: Record<Rank, string> = {
+  Uncommon: "rank-uncommon",
+  Rare: "rank-rare",
+  Epic: "rank-epic",
+  Legendary: "rank-legendary",
 } as const;
 
 function HeaderIcon({ src, title }: { src: string; title: string }) {
@@ -56,7 +64,18 @@ export default function AscensionTable({
   const data = ASCENSION_COSTS[rank];
 
   return (
-    <div className="rounded-2xl border-t-4 border-[color:var(--input)] p-4 bg-[var(--card)]">
+    <div
+      className={[
+        "rounded-2xl",
+        "border", // normal frame
+        "border-[color:var(--input)]", // frame color
+        "border-t-4", // thicker top
+        "[border-top-color:var(--rank-accent)]", // accent only on top edge
+        "shadow-[inset_0_-1px_0_0_var(--rank-accent-faint)]", // subtle inner top glow
+        "p-4 bg-[var(--card)]",
+        RANK_CLASS[rank], // sets --rank-accent from globals
+      ].join(" ")}
+    >
       <div className="mb-3 flex items-center justify-between">
         <h3 className="text-lg font-semibold">{title}</h3>
         <span className="text-xs opacity-70">
@@ -67,7 +86,7 @@ export default function AscensionTable({
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b-2 border-[color:var(--input)]">
+            <tr className="border-b-2 [border-bottom-color:var(--rank-accent-weak)]">
               <th className="py-2 text-left">Step</th>
 
               {/* Clear stones */}

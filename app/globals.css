@@ -104,6 +104,42 @@
   --sidebar-ring: oklch(0.541 0.281 293.009);
 }
 
+/* Rank accents – tuned to game UI */
+:root,
+.dark,
+[data-theme="dark"] {
+  /* base swatches (OKLCH = perceptual, looks great on dark) */
+  --rank-common: oklch(0.72 0.02 260); /* neutral gray label */
+  --rank-uncommon: oklch(0.82 0.26 140); /* neon green */
+  --rank-rare: oklch(0.74 0.2 235); /* bright azure blue */
+  --rank-epic: oklch(0.75 0.3 328); /* vivid magenta */
+  --rank-legendary: oklch(0.8 0.22 60); /* saturated orange */
+
+  /* active accent (will be overridden per table via helper class) */
+  --rank-accent: var(--rank-common);
+
+  /* handy tints if you ever want lighter rules or fills */
+  --rank-accent-weak: color-mix(in oklch, var(--rank-accent) 35%, var(--input));
+  --rank-accent-faint: color-mix(in oklch, var(--rank-accent) 20%, transparent);
+}
+
+/* helpers you can apply on any container */
+.rank-common {
+  --rank-accent: var(--rank-common);
+}
+.rank-uncommon {
+  --rank-accent: var(--rank-uncommon);
+}
+.rank-rare {
+  --rank-accent: var(--rank-rare);
+}
+.rank-epic {
+  --rank-accent: var(--rank-epic);
+}
+.rank-legendary {
+  --rank-accent: var(--rank-legendary);
+}
+
 /* =========
    Base
    ========= */
