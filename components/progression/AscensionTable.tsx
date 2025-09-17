@@ -23,7 +23,7 @@ function HeaderIcon({ src, title }: { src: string; title: string }) {
     <>
       <Image
         src={src}
-        alt="" // decorative; screen reader gets the sr-only label
+        alt=""
         aria-hidden
         width={24}
         height={24}
@@ -63,17 +63,38 @@ export default function AscensionTable({
 }) {
   const data = ASCENSION_COSTS[rank];
 
+  // Steps + totals (hide zeros with fmt) ---
+  const STEPS = [1, 2, 3, 4, 5, 6] as const;
+  const totals = STEPS.reduce(
+    (t, s) => {
+      const step = s as StarStep;
+      const row = data[step];
+      t.clear.lesser += row.clear.lesser;
+      t.clear.greater += row.clear.greater;
+      t.clear.grand += row.clear.grand;
+      t.trait.lesser += row.trait.lesser;
+      t.trait.greater += row.trait.greater;
+      t.trait.grand += row.trait.grand;
+      return t;
+    },
+    {
+      clear: { lesser: 0, greater: 0, grand: 0 },
+      trait: { lesser: 0, greater: 0, grand: 0 },
+    }
+  );
+  const fmt = (n: number) => (n === 0 ? "" : n);
+
   return (
     <div
       className={[
         "rounded-2xl",
-        "border", // normal frame
-        "border-[color:var(--input)]", // frame color
-        "border-t-4", // thicker top
-        "[border-top-color:var(--rank-accent)]", // accent only on top edge
-        "shadow-[inset_0_-1px_0_0_var(--rank-accent-faint)]", // subtle inner top glow
+        "border",
+        "border-[color:var(--input)]",
+        "border-t-4",
+        "[border-top-color:var(--rank-accent)]",
+        "shadow-[inset_0_-1px_0_0_var(--rank-accent-faint)]",
         "p-4 bg-[var(--card)]",
-        RANK_CLASS[rank], // sets --rank-accent from globals
+        RANK_CLASS[rank],
       ].join(" ")}
     >
       <div className="mb-3 flex items-center justify-between">
@@ -134,7 +155,7 @@ export default function AscensionTable({
           </thead>
 
           <tbody>
-            {[1, 2, 3, 4, 5, 6].map((s) => {
+            {STEPS.map((s) => {
               const step = s as StarStep;
               return (
                 <tr key={s} className="border-b border-[color:var(--border)]">
@@ -143,28 +164,57 @@ export default function AscensionTable({
                   </td>
                   {/* Clear */}
                   <td className="py-2 text-center tabular-nums">
-                    {data[step].clear.lesser}
+                    {fmt(data[step].clear.lesser)}
                   </td>
                   <td className="py-2 text-center tabular-nums">
-                    {data[step].clear.greater}
+                    {fmt(data[step].clear.greater)}
                   </td>
                   <td className="py-2 text-center tabular-nums">
-                    {data[step].clear.grand}
+                    {fmt(data[step].clear.grand)}
                   </td>
                   {/* Trait */}
                   <td className="py-2 text-center tabular-nums">
-                    {data[step].trait.lesser}
+                    {fmt(data[step].trait.lesser)}
                   </td>
                   <td className="py-2 text-center tabular-nums">
-                    {data[step].trait.greater}
+                    {fmt(data[step].trait.greater)}
                   </td>
                   <td className="py-2 text-center tabular-nums">
-                    {data[step].trait.grand}
+                    {fmt(data[step].trait.grand)}
                   </td>
                 </tr>
               );
             })}
           </tbody>
+
+          {/* --- Totals row --- */}
+          <tfoot>
+            <tr className="border-t-2 [border-top-color:var(--rank-accent-weak)]">
+              <th className="py-2 text-left font-semibold">
+                Total Soulstones :
+              </th>
+              {/* Clear */}
+              <td className="py-2 text-center font-semibold tabular-nums">
+                {fmt(totals.clear.lesser)}
+              </td>
+              <td className="py-2 text-center font-semibold tabular-nums">
+                {fmt(totals.clear.greater)}
+              </td>
+              <td className="py-2 text-center font-semibold tabular-nums">
+                {fmt(totals.clear.grand)}
+              </td>
+              {/* Trait */}
+              <td className="py-2 text-center font-semibold tabular-nums">
+                {fmt(totals.trait.lesser)}
+              </td>
+              <td className="py-2 text-center font-semibold tabular-nums">
+                {fmt(totals.trait.greater)}
+              </td>
+              <td className="py-2 text-center font-semibold tabular-nums">
+                {fmt(totals.trait.grand)}
+              </td>
+            </tr>
+          </tfoot>
         </table>
       </div>
 
