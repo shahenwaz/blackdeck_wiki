@@ -77,7 +77,9 @@ export default function AscensionTable({
       ].join(" ")}
     >
       <div className="mb-3 flex items-center justify-between">
-        <h3 className="text-lg font-semibold">{title}</h3>
+        <h3 className="text-lg font-bold [color:var(--rank-accent)]">
+          {title}
+        </h3>
         <span className="text-xs opacity-70">
           {rank} • {trait}
         </span>
