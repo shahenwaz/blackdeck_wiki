@@ -71,17 +71,19 @@ export function Token({
           {triggerNode}
         </PopoverTrigger>
         <PopoverContent
+          showArrow
           side="top"
           align="center"
           sideOffset={10}
           className={[
+            "relative z-50 overflow-visible",
             "max-w-[260px] text-center",
             "rounded-xl px-3.5 py-2.5",
-            "border-2 border-[color:var(--border)]/85", // thicker, crisper border
+            "border-2 border-[color:var(--border)]/85",
             "bg-[color-mix(in_oklab,var(--popover)_92%,transparent)]",
-            "backdrop-blur-md", // a touch more blur
-            // two-layer strong shadow for real lift
-            "shadow-[0_22px_46px_-12px_rgba(0,0,0,0.65),0_3px_10px_rgba(0,0,0,0.28)]",
+            "backdrop-blur-md",
+            // stronger shadow for better contrast
+            "shadow-[0_4px_10px_1px_rgba(0,0,0,0.80)]",
             "data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95",
             "text-[13px] leading-snug",
           ].join(" ")}
@@ -116,8 +118,7 @@ export function Token({
           "bg-[color-mix(in_oklab,var(--popover)_94%,transparent)]",
           "backdrop-blur-md",
 
-          // --- compact, near-border halo (no double rings, no huge spread) ---
-          // --- compact but darker + slightly wider halo ---
+          // stronger shadow for better contrast
           "shadow-[0_4px_10px_1px_rgba(0,0,0,0.80)]",
 
           "data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95",

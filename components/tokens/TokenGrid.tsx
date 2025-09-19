@@ -47,6 +47,15 @@ type SortKey = (typeof SORTS)[number];
 const isSortKey = (v: string): v is SortKey =>
   (SORTS as readonly string[]).includes(v);
 
+const POPOVER_GLASS = [
+  "relative z-50 overflow-visible",
+  "rounded-lg border-2 border-[color:var(--border)]/85",
+  "bg-[color-mix(in_oklab,var(--popover)_94%,transparent)]",
+  "backdrop-blur-md",
+  // compact, darker near-border halo (matches your tooltip)
+  "shadow-[0_4px_10px_1px_rgba(0,0,0,0.80)]",
+].join(" ");
+
 // ── Component (List-only) ─────────────────────────────────────────────────────
 export function TokenGrid() {
   const [q, setQ] = React.useState("");
@@ -111,7 +120,12 @@ export function TokenGrid() {
               >
                 <SelectValue placeholder="Category" />
               </SelectTrigger>
-              <SelectContent align="start">
+              <SelectContent
+                align="start"
+                position="popper"
+                sideOffset={8}
+                className={POPOVER_GLASS}
+              >
                 {categoryOptions.map((c) => (
                   <SelectItem key={c.value} value={c.value}>
                     {c.label}
@@ -127,7 +141,12 @@ export function TokenGrid() {
               <SelectTrigger aria-label="Sort" className="w-full sm:w-[150px]">
                 <SelectValue placeholder="Sort" />
               </SelectTrigger>
-              <SelectContent align="start">
+              <SelectContent
+                align="start"
+                position="popper"
+                sideOffset={8}
+                className={POPOVER_GLASS}
+              >
                 <SelectItem value="name-asc">Name (A→Z)</SelectItem>
                 <SelectItem value="name-desc">Name (Z→A)</SelectItem>
                 <SelectItem value="category">Category</SelectItem>

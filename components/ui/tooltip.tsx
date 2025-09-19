@@ -47,7 +47,6 @@ function TooltipContent({
         data-slot="tooltip-content"
         sideOffset={sideOffset}
         className={cn(
-          "group", // ← NEW: so we can target the arrow by side
           // keep shadcn defaults minimal; your caller classes (Token.tsx) will override bg/typography
           "animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95",
           "data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
@@ -62,14 +61,12 @@ function TooltipContent({
         {/* Arrow styled to match the “glassy” tooltip you built in Token.tsx */}
         <TooltipPrimitive.Arrow
           className={cn(
-            // size & shape
+            // diamond carret size & shape
             "size-3.5 rotate-45 rounded-[3px]",
-            // surface: same tint as your tooltip (matches your Token.tsx bg)
-            "bg-[color-mix(in_oklab,var(--popover)_94%,transparent)] fill-[color-mix(in_oklab,var(--popover)_94%,transparent)]",
+            "bg-[color-mix(in_oklab,var(--popover)_94%,transparent)]",
+            "fill-[color-mix(in_oklab,var(--popover)_94%,transparent)]",
             // border to avoid the 'dot' look
             "border-b-2 border-r-2 border-[color:var(--border)]/85",
-            // elevation to feel connected and floating
-            "drop-shadow-[0_4px_10px_rgba(0,0,0,0.25)]",
             // position tweak so it kisses the bubble edge nicely
             "translate-y-[calc(-50%_+_1.5px)]"
           )}
