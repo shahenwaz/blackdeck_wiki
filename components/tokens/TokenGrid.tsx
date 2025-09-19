@@ -15,8 +15,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
+import { CategoryPill } from "@/components/tokens/CategoryPill";
 
 // ── Types & helpers ────────────────────────────────────────────────────────────
 const CATEGORIES = [
@@ -167,14 +167,14 @@ function ListRow({ token }: { token: TokenRecord }) {
     hover:[border-left-color:var(--ring)]
   "
     >
-      <CardContent className="px-2 sm:px-4">
+      <CardContent className="px-3 sm:px-4">
         <div className="flex items-center gap-3 sm:gap-4">
           {/* Icon pod */}
           <div
             className="
               shrink-0 rounded-xl p-2
               bg-[color-mix(in_oklab,var(--background) 88%,var(--foreground) 12%)]
-              ring-1 ring-[color:var(--border)]
+              ring-2 ring-[color:var(--border)]
               group-hover:ring-[color:var(--ring)]
             "
           >
@@ -185,9 +185,7 @@ function ListRow({ token }: { token: TokenRecord }) {
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2">
               <div className="font-semibold truncate">{token.name}</div>
-              <Badge variant="outline" className="text-[11px] capitalize">
-                {token.category.replace("-", " ")}
-              </Badge>
+              <CategoryPill category={token.category} />
             </div>
             <p className="mt-1 text-xs text-muted-foreground line-clamp-2">
               {token.desc}
