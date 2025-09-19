@@ -77,7 +77,7 @@ export function Token({
           className={[
             "max-w-[260px] text-center",
             "rounded-xl px-3.5 py-2.5",
-            "border-3 border-[color:var(--border)]/85", // thicker, crisper border
+            "border-2 border-[color:var(--border)]/85", // thicker, crisper border
             "bg-[color-mix(in_oklab,var(--popover)_92%,transparent)]",
             "backdrop-blur-md", // a touch more blur
             // two-layer strong shadow for real lift
@@ -109,13 +109,17 @@ export function Token({
         align="center"
         sideOffset={8}
         className={[
+          "relative z-50",
           "max-w-[240px] text-center",
           "rounded-xl px-3 py-2",
-          "border-3 border-[color:var(--border)]/85", // thicker border
+          "border-2 border-[color:var(--border)]/85",
           "bg-[color-mix(in_oklab,var(--popover)_94%,transparent)]",
           "backdrop-blur-md",
-          // slightly lighter than popover but still pronounced
-          "shadow-[0_18px_40px_-14px_rgba(0,0,0,0.6),0_2px_8px_rgba(0,0,0,0.25)]",
+
+          // --- compact, near-border halo (no double rings, no huge spread) ---
+          // --- compact but darker + slightly wider halo ---
+          "shadow-[0_4px_10px_1px_rgba(0,0,0,0.80)]",
+
           "data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95",
           "text-[13px] leading-snug",
         ].join(" ")}

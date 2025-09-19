@@ -138,9 +138,12 @@ export function TokenGrid() {
       </div>
 
       {/* List */}
-      <ul className="grid grid-cols-1 lg:grid-cols-2 gap-3" role="list">
+      <ul
+        className="columns-1 md:columns-2 gap-3 [column-fill:balance]"
+        role="list"
+      >
         {items.map((t) => (
-          <li key={t.id}>
+          <li key={t.id} className="break-inside-avoid mb-3">
             <ListRow token={t} />
           </li>
         ))}
@@ -161,7 +164,7 @@ function ListRow({ token }: { token: TokenRecord }) {
   return (
     <Card
       className="
-        h-full group rounded-2xl border transition-colors
+        group rounded-2xl border transition-colors
         hover:bg-card
         border-x-4 border-[color:var(--input)]
         bg-[color-mix(in_oklab,var(--card)_60%,transparent)]
@@ -169,7 +172,7 @@ function ListRow({ token }: { token: TokenRecord }) {
       "
     >
       <CardContent className="p-0">
-        <div className="flex items-center gap-3 sm:gap-4 py-2 px-3 sm:px-4">
+        <div className="flex items-center gap-3 sm:gap-4 px-3 sm:px-4">
           <div
             className="
               shrink-0 w-14 h-14 grid place-items-center rounded-xl
@@ -185,7 +188,7 @@ function ListRow({ token }: { token: TokenRecord }) {
               <div className="font-semibold truncate">{token.name}</div>
               <CategoryPill category={token.category} />
             </div>
-            <p className="mt-1 text-xs text-muted-foreground line-clamp-2">
+            <p className="mt-1 text-xs text-muted-foreground text-pretty break-words">
               {token.desc}
             </p>
           </div>
