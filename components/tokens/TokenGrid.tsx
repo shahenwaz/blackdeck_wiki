@@ -161,27 +161,25 @@ function ListRow({ token }: { token: TokenRecord }) {
   return (
     <Card
       className="
-    group rounded-2xl border transition-colors
-    hover:bg-card
-    border-t-5 border-[color:var(--input)] bg-[color-mix(in_oklab,var(--card)_60%,transparent)]
-    hover:[border-left-color:var(--ring)]
-  "
+        h-full group rounded-2xl border transition-colors
+        hover:bg-card
+        border-x-4 border-[color:var(--input)]
+        bg-[color-mix(in_oklab,var(--card)_60%,transparent)]
+        hover:border-[color:var(--ring)]
+      "
     >
-      <CardContent className="px-3 sm:px-4">
-        <div className="flex items-center gap-3 sm:gap-4">
-          {/* Icon pod */}
+      <CardContent className="p-0">
+        <div className="flex items-center gap-3 sm:gap-4 py-2 px-3 sm:px-4">
           <div
             className="
-              shrink-0 rounded-xl p-2
-              bg-[color-mix(in_oklab,var(--background) 88%,var(--foreground) 12%)]
+              shrink-0 w-14 h-14 grid place-items-center rounded-xl
+              bg-[color-mix(in_oklab,var(--background)_88%,var(--foreground)_12%)]
               ring-2 ring-[color:var(--border)]
-              group-hover:ring-[color:var(--ring)]
             "
           >
             <Token id={token.id} size={40} />
           </div>
 
-          {/* Text */}
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2">
               <div className="font-semibold truncate">{token.name}</div>

@@ -19,18 +19,16 @@ export function Token({
   id,
   size = 28,
   className,
-  trigger = "auto", // << default
+  trigger = "auto",
 }: {
   id: ItemId;
   size?: number;
   className?: string;
   trigger?: TriggerMode;
-  label?: boolean;
 }) {
   const t = TOKENS[id];
   const [pref, setPref] = React.useState<"hover" | "click">("click");
 
-  // Decide once on mount: if device supports hover, prefer tooltip; otherwise popover.
   React.useEffect(() => {
     const canHover = window.matchMedia(
       "(hover: hover) and (pointer: fine)"
@@ -41,38 +39,91 @@ export function Token({
   const mode =
     trigger === "auto" ? pref : trigger === "none" ? "hover" : trigger;
 
-  const img = (
-    <Image
-      src={t.src}
-      alt={t.name}
-      width={size}
-      height={size}
-      className={["inline-block align-middle", className]
-        .filter(Boolean)
-        .join(" ")}
-    />
+  // neutral trigger (no hover ring/bg anywhere)
+  const triggerNode = (
+    <span
+      className={[
+        "inline-block align-middle select-none",
+        className || "",
+      ].join(" ")}
+    >
+      <Image
+        src={t.src}
+        alt={t.name}
+        width={size}
+        height={size}
+        className="align-middle"
+      />
+    </span>
   );
 
-  if (trigger === "none") return img;
+  if (trigger === "none") return triggerNode;
 
   if (mode === "click") {
+    // POPover (tap on mobile) — compact, centered, nicer border & shadow
     return (
       <Popover>
-        <PopoverTrigger asChild>{img}</PopoverTrigger>
-        <PopoverContent className="max-w-xs text-sm">
-          <div className="font-medium">{t.name}</div>
-          <p className="text-muted-foreground mt-1">{t.desc}</p>
+        <PopoverTrigger
+          asChild
+          // kill any focus rings/dots from parent styles
+          className="focus:outline-none focus-visible:outline-none focus:ring-0"
+        >
+          {triggerNode}
+        </PopoverTrigger>
+        <PopoverContent
+          side="top"
+          align="center"
+          sideOffset={10}
+          className={[
+            "max-w-[260px] text-center",
+            "rounded-xl px-3.5 py-2.5",
+            "border-3 border-[color:var(--border)]/85", // thicker, crisper border
+            "bg-[color-mix(in_oklab,var(--popover)_92%,transparent)]",
+            "backdrop-blur-md", // a touch more blur
+            // two-layer strong shadow for real lift
+            "shadow-[0_22px_46px_-12px_rgba(0,0,0,0.65),0_3px_10px_rgba(0,0,0,0.28)]",
+            "data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95",
+            "text-[13px] leading-snug",
+          ].join(" ")}
+        >
+          <div className="font-semibold tracking-tight">{t.name}</div>
+          <p className="mt-1 text-xs text-muted-foreground text-pretty">
+            {t.desc}
+          </p>
         </PopoverContent>
       </Popover>
     );
   }
 
+  // TOOLTIP (hover on desktop) — same visual language as popover
   return (
-    <Tooltip>
-      <TooltipTrigger asChild>{img}</TooltipTrigger>
-      <TooltipContent side="top" className="max-w-xs">
+    <Tooltip delayDuration={120}>
+      <TooltipTrigger
+        asChild
+        className="focus:outline-none focus-visible:outline-none focus:ring-0"
+      >
+        {triggerNode}
+      </TooltipTrigger>
+      <TooltipContent
+        side="top"
+        align="center"
+        sideOffset={8}
+        className={[
+          "max-w-[240px] text-center",
+          "rounded-xl px-3 py-2",
+          "border-3 border-[color:var(--border)]/85", // thicker border
+          "bg-[color-mix(in_oklab,var(--popover)_94%,transparent)]",
+          "backdrop-blur-md",
+          // slightly lighter than popover but still pronounced
+          "shadow-[0_18px_40px_-14px_rgba(0,0,0,0.6),0_2px_8px_rgba(0,0,0,0.25)]",
+          "data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95",
+          "text-[13px] leading-snug",
+        ].join(" ")}
+      >
         <div className="font-medium">{t.name}</div>
-        <p className="text-xs text-muted-foreground mt-0.5">{t.desc}</p>
+        <p className="mt-0.5 text-xs text-muted-foreground text-pretty">
+          {t.desc}
+        </p>
       </TooltipContent>
     </Tooltip>
   );

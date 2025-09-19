@@ -10,7 +10,17 @@ export type TokenId =
   | "gems"
   | "stamina"
   | "melee"
+  | "melee_frost"
+  | "melee_lightning"
+  | "melee_poison"
+  | "melee_fire"
+  | "melee_multi"
   | "ranged"
+  | "ranged_frost"
+  | "ranged_lightning"
+  | "ranged_poison"
+  | "ranged_fire"
+  | "ranged_multi"
   | "soulstone_lesser_clear"
   | "soulstone_lesser_hero"
   | "soulstone_lesser_melee"
@@ -33,7 +43,7 @@ export const TOKENS: Record<TokenId, TokenRecord> = {
   coins: {
     id: "coins",
     name: "Coins",
-    desc: "Used to upgrade your cards and equipment or buy then in the market.",
+    desc: "Used to upgrade your cards and equipment or buy them in the market.",
     src: "/images/tokens/coin_icon.png",
     category: "resource",
   },
@@ -60,11 +70,81 @@ export const TOKENS: Record<TokenId, TokenRecord> = {
     src: "/images/tokens/melee.png",
     category: "unit-type",
   },
+  melee_frost: {
+    id: "melee_frost",
+    name: "Melee / Frost",
+    desc: "Melee units take damage equal to the target's strength when they attack. Frost cards freeze any enemy they're used on or deal return damage to. Frozen cards can't attack and don't deal damage when defending. Frost cards are immune to other frost effects.",
+    src: "/images/tokens/melee_frost.png",
+    category: "unit-type",
+  },
+  melee_lightning: {
+    id: "melee_lightning",
+    name: "Melee / Lightning",
+    desc: "Melee units take damage equal to the target's strength when they attack. Lightning cards shock any enemy they're used on or deal return damage to. Shocked cards lose their non-elemental abilities. Lightning cards are immune to other shock effects.",
+    src: "/images/tokens/melee_lightning.png",
+    category: "unit-type",
+  },
+  melee_poison: {
+    id: "melee_poison",
+    name: "Melee / Poison",
+    desc: "Melee units take damage equal to the target's strength when they attack. Poisonous cards poison any enemy they're used on or deal return damage to. Poisoned cards take damage every turn. Poisonous cards are immune to other poison effects.",
+    src: "/images/tokens/melee_poison.png",
+    category: "unit-type",
+  },
+  melee_fire: {
+    id: "melee_fire",
+    name: "Melee / Fire",
+    desc: "Melee units take damage equal to the target's strength when they attack. Fire cards ignite any enemy they're used on or deal return damage to. Burning cards have reduced strength. Fire cards are immune to other fire effects.",
+    src: "/images/tokens/melee_fire.png",
+    category: "unit-type",
+  },
+  melee_multi: {
+    id: "melee_multi",
+    name: "Melee / Multi",
+    desc: "Melee units take damage equal to the target's strength when they attack. Random element cards apply either Fire, Frost, Lightning, or Poison to any enemy they're used on or deal return damage to.",
+    src: "/images/tokens/melee_multi.png",
+    category: "unit-type",
+  },
   ranged: {
     id: "ranged",
     name: "Ranged",
     desc: "Ranged units don't take damage when they attack.",
     src: "/images/tokens/ranged.png",
+    category: "unit-type",
+  },
+  ranged_frost: {
+    id: "ranged_frost",
+    name: "Ranged / Frost",
+    desc: "Ranged units don't take damage when they attack. Frost cards freeze any enemy they're used on or deal return damage to. Frozen cards can't attack and don't deal damage when defending. Frost cards are immune to other frost effects.",
+    src: "/images/tokens/ranged_frost.png",
+    category: "unit-type",
+  },
+  ranged_lightning: {
+    id: "ranged_lightning",
+    name: "Ranged / Lightning",
+    desc: "Ranged units don't take damage when they attack. Lightning cards shock any enemy they're used on or deal return damage to. Shocked cards lose their non-elemental abilities. Lightning cards are immune to other shock effects.",
+    src: "/images/tokens/ranged_lightning.png",
+    category: "unit-type",
+  },
+  ranged_poison: {
+    id: "ranged_poison",
+    name: "Ranged / Poison",
+    desc: "Ranged units don't take damage when they attack. Poisonous cards poison any enemy they're used on or deal return damage to. Poisoned cards take damage every turn. Poisonous cards are immune to other poison effects.",
+    src: "/images/tokens/ranged_poison.png",
+    category: "unit-type",
+  },
+  ranged_fire: {
+    id: "ranged_fire",
+    name: "Ranged / Fire",
+    desc: "Ranged units don't take damage when they attack. Fire cards ignite any enemy they're used on or deal return damage to. Burning cards have reduced strength. Fire cards are immune to other fire effects.",
+    src: "/images/tokens/ranged_fire.png",
+    category: "unit-type",
+  },
+  ranged_multi: {
+    id: "ranged_multi",
+    name: "Ranged / Multi",
+    desc: "Ranged units don't take damage when they attack. Random element cards apply either Fire, Frost, Lightning, or Poison to any enemy they're used on or deal return damage to.",
+    src: "/images/tokens/ranged_multi.png",
     category: "unit-type",
   },
 
