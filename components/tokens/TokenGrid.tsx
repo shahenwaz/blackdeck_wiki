@@ -16,9 +16,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 
-// ---- Types & helpers -------------------------------------------------
+// ── Types & helpers ────────────────────────────────────────────────────────────
 const CATEGORIES = [
   "resource",
   "unit-type",
@@ -47,7 +47,7 @@ type SortKey = (typeof SORTS)[number];
 const isSortKey = (v: string): v is SortKey =>
   (SORTS as readonly string[]).includes(v);
 
-// ---- Component -------------------------------------------------------
+// ── Component (List-only) ─────────────────────────────────────────────────────
 export function TokenGrid() {
   const [q, setQ] = React.useState("");
   const [cat, setCat] = React.useState<CatFilter>("all");
@@ -80,55 +80,68 @@ export function TokenGrid() {
   }, [q, cat, sort]);
 
   return (
-    <div className="space-y-6">
-      {/* Controls */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-        <Input
-          value={q}
-          onChange={(e) => setQ(e.target.value)}
-          placeholder="Search icons by name, description, or id…"
-          aria-label="Search icons"
-        />
+    <div className="space-y-3">
+      {/* Controls: Search on row-1; filters on row-2 on small.
+          On ≥sm, everything fits inline. */}
+      <div
+        className="rounded-2xl border-x-4 border-[color:var(--input)] bg-[var(--card)]
+                   px-3 py-4 sm:px-4"
+      >
+        <div className="flex flex-col gap-2 sm:flex-row lg:items-center lg:gap-2">
+          {/* Row 1 (always full width) */}
+          <div className="col-span-full w-full">
+            <Input
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+              placeholder="Search icons by name, description, or id…"
+              aria-label="Search icons"
+              className="w-full"
+            />
+          </div>
 
-        <Select
-          value={cat}
-          onValueChange={(v) => setCat(isCatFilter(v) ? v : "all")}
-        >
-          <SelectTrigger aria-label="Filter by category">
-            <SelectValue placeholder="Category" />
-          </SelectTrigger>
-          <SelectContent align="start">
-            {categoryOptions.map((c) => (
-              <SelectItem key={c.value} value={c.value}>
-                {c.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+          {/* Row 2 (filters). On small they form the second row. On ≥sm they sit inline. */}
+          <div className="grid grid-cols-2 gap-2 w-full sm:w-auto sm:grid-cols-[auto_auto]">
+            <Select
+              value={cat}
+              onValueChange={(v) => setCat(isCatFilter(v) ? v : "all")}
+            >
+              <SelectTrigger
+                aria-label="Filter by category"
+                className="w-full sm:w-[140px]"
+              >
+                <SelectValue placeholder="Category" />
+              </SelectTrigger>
+              <SelectContent align="start">
+                {categoryOptions.map((c) => (
+                  <SelectItem key={c.value} value={c.value}>
+                    {c.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
 
-        <Select
-          value={sort}
-          onValueChange={(v) => setSort(isSortKey(v) ? v : "name-asc")}
-        >
-          <SelectTrigger aria-label="Sort">
-            <SelectValue placeholder="Sort" />
-          </SelectTrigger>
-          <SelectContent align="start">
-            <SelectItem value="name-asc">Name (A→Z)</SelectItem>
-            <SelectItem value="name-desc">Name (Z→A)</SelectItem>
-            <SelectItem value="category">Category</SelectItem>
-          </SelectContent>
-        </Select>
+            <Select
+              value={sort}
+              onValueChange={(v) => setSort(isSortKey(v) ? v : "name-asc")}
+            >
+              <SelectTrigger aria-label="Sort" className="w-full sm:w-[150px]">
+                <SelectValue placeholder="Sort" />
+              </SelectTrigger>
+              <SelectContent align="start">
+                <SelectItem value="name-asc">Name (A→Z)</SelectItem>
+                <SelectItem value="name-desc">Name (Z→A)</SelectItem>
+                <SelectItem value="category">Category</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
       </div>
 
-      {/* Grid */}
-      <ul
-        className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4"
-        role="list"
-      >
+      {/* List */}
+      <ul className="grid grid-cols-1 lg:grid-cols-2 gap-3" role="list">
         {items.map((t) => (
           <li key={t.id}>
-            <TokenCard token={t} />
+            <ListRow token={t} />
           </li>
         ))}
       </ul>
@@ -143,26 +156,43 @@ export function TokenGrid() {
   );
 }
 
-function TokenCard({ token }: { token: TokenRecord }) {
+// ── Row design ─────────────────────────────────────────
+function ListRow({ token }: { token: TokenRecord }) {
   return (
-    <Card className="group h-full overflow-hidden transition-[transform,box-shadow] hover:shadow-md hover:-translate-y-0.5">
-      <CardHeader className="pb-2">
-        <div className="flex items-center justify-between gap-2">
-          <CardTitle className="text-base font-medium truncate">
-            {token.name}
-          </CardTitle>
-          <Badge variant="outline" className="text-[11px] capitalize">
-            {token.category.replace("-", " ")}
-          </Badge>
-        </div>
-      </CardHeader>
-      <CardContent className="pt-0">
-        <div className="flex items-center gap-3">
-          {/* auto: tooltip on desktop, popover on touch */}
-          <Token id={token.id} size={40} />
-          <p className="text-xs text-muted-foreground line-clamp-3">
-            {token.desc}
-          </p>
+    <Card
+      className="
+    group rounded-2xl border transition-colors
+    hover:bg-card
+    border-t-5 border-[color:var(--input)] bg-[color-mix(in_oklab,var(--card)_60%,transparent)]
+    hover:[border-left-color:var(--ring)]
+  "
+    >
+      <CardContent className="px-2 sm:px-4">
+        <div className="flex items-center gap-3 sm:gap-4">
+          {/* Icon pod */}
+          <div
+            className="
+              shrink-0 rounded-xl p-2
+              bg-[color-mix(in_oklab,var(--background) 88%,var(--foreground) 12%)]
+              ring-1 ring-[color:var(--border)]
+              group-hover:ring-[color:var(--ring)]
+            "
+          >
+            <Token id={token.id} size={40} />
+          </div>
+
+          {/* Text */}
+          <div className="min-w-0 flex-1">
+            <div className="flex items-center gap-2">
+              <div className="font-semibold truncate">{token.name}</div>
+              <Badge variant="outline" className="text-[11px] capitalize">
+                {token.category.replace("-", " ")}
+              </Badge>
+            </div>
+            <p className="mt-1 text-xs text-muted-foreground line-clamp-2">
+              {token.desc}
+            </p>
+          </div>
         </div>
       </CardContent>
     </Card>
