@@ -22,6 +22,7 @@ import { CategoryPill } from "@/components/tokens/CategoryPill";
 const CATEGORIES = [
   "resource",
   "unit-type",
+  "attack-pattern",
   "soulstone",
   "token",
   "misc",
@@ -37,6 +38,7 @@ const categoryOptions: Array<{ value: "all" | TokenCategory; label: string }> =
     { value: "all", label: "All" },
     { value: "resource", label: "Resources" },
     { value: "unit-type", label: "Unit Types" },
+    { value: "attack-pattern", label: "Attack Pattern" },
     { value: "soulstone", label: "Soulstones" },
     { value: "token", label: "Unit Tokens" },
     { value: "misc", label: "Misc" },

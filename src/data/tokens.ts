@@ -1,6 +1,7 @@
 export type TokenCategory =
   | "resource"
   | "unit-type"
+  | "attack-pattern"
   | "soulstone"
   | "token"
   | "misc";
@@ -9,6 +10,10 @@ export type TokenId =
   | "coins"
   | "gems"
   | "stamina"
+  | "experience"
+  | "bronze_medal"
+  | "silver_medal"
+  | "gold_medal"
   | "melee"
   | "melee_frost"
   | "melee_lightning"
@@ -21,6 +26,13 @@ export type TokenId =
   | "ranged_poison"
   | "ranged_fire"
   | "ranged_multi"
+  | "default"
+  | "random_2"
+  | "random_3"
+  | "random_4"
+  | "column"
+  | "row"
+  | "cross"
   | "soulstone_lesser_clear"
   | "soulstone_lesser_hero"
   | "soulstone_lesser_melee"
@@ -28,7 +40,13 @@ export type TokenId =
   | "unit_token_regular"
   | "unit_token_elite"
   | "unit_token_premium"
-  | "unit_token_hero";
+  | "unit_token_hero"
+  | "evolution_star"
+  | "ascension_star"
+  | "hero"
+  | "unit"
+  | "strength"
+  | "power";
 
 export type TokenRecord = {
   id: TokenId;
@@ -59,6 +77,34 @@ export const TOKENS: Record<TokenId, TokenRecord> = {
     name: "Stamina",
     desc: "Required for Campaign and Dungeon battles.",
     src: "/images/tokens/stamina_icon.png",
+    category: "resource",
+  },
+  experience: {
+    id: "experience",
+    name: "Experience",
+    desc: "Used to increase your player Level / Rank.",
+    src: "/images/tokens/exp_icon.png",
+    category: "resource",
+  },
+  bronze_medal: {
+    id: "bronze_medal",
+    name: "Bronze Medal",
+    desc: "Required for Town Hall upgrades.",
+    src: "/images/tokens/bronze_medal.png",
+    category: "resource",
+  },
+  silver_medal: {
+    id: "silver_medal",
+    name: "Silver Medal",
+    desc: "Required for Town Hall upgrades.",
+    src: "/images/tokens/silver_medal.png",
+    category: "resource",
+  },
+  gold_medal: {
+    id: "gold_medal",
+    name: "Gold Medal",
+    desc: "Required for Town Hall upgrades.",
+    src: "/images/tokens/gold_medal.png",
     category: "resource",
   },
 
@@ -146,6 +192,101 @@ export const TOKENS: Record<TokenId, TokenRecord> = {
     desc: "Ranged units don't take damage when they attack. Random element cards apply either Fire, Frost, Lightning, or Poison to any enemy they're used on or deal return damage to.",
     src: "/images/tokens/ranged_multi.png",
     category: "unit-type",
+  },
+
+  //   ---------- Attack Pattern ----------
+  default: {
+    id: "default",
+    name: "Default Attack",
+    desc: "Attacks the selected target.",
+    src: "/images/tokens/default.png",
+    category: "attack-pattern",
+  },
+  random_2: {
+    id: "random_2",
+    name: "Random (2)",
+    desc: "Attacks the selected target and 1 other random enemy.",
+    src: "/images/tokens/random_2.png",
+    category: "attack-pattern",
+  },
+  random_3: {
+    id: "random_3",
+    name: "Random (3)",
+    desc: "Attacks the selected target and 2 other random enemies.",
+    src: "/images/tokens/random_3.png",
+    category: "attack-pattern",
+  },
+  random_4: {
+    id: "random_4",
+    name: "Random (4)",
+    desc: "Attacks the selected target and 3 other random enemies.",
+    src: "/images/tokens/random_4.png",
+    category: "attack-pattern",
+  },
+  column: {
+    id: "column",
+    name: "Column Attack",
+    desc: "Attacks the selected target and all enemies in the same column.",
+    src: "/images/tokens/column.png",
+    category: "attack-pattern",
+  },
+  row: {
+    id: "row",
+    name: "Row Attack",
+    desc: "Attacks the selected target and all enemies in the same row.",
+    src: "/images/tokens/row.png",
+    category: "attack-pattern",
+  },
+  cross: {
+    id: "cross",
+    name: "Cross Attack",
+    desc: "Attacks the selected target and all enemies in the same row & column.",
+    src: "/images/tokens/cross.png",
+    category: "attack-pattern",
+  },
+
+  //   ---------- Stars for upgrading cards ----------
+  evolution_star: {
+    id: "evolution_star",
+    name: "Evolution Star",
+    desc: "The evolution of the card determines its potential. It can be increased up to 6⭐ when the card is at max level.",
+    src: "/images/tokens/evolution_star.png",
+    category: "misc",
+  },
+  ascension_star: {
+    id: "ascension_star",
+    name: "Ascension Star",
+    desc: "The ascension of a card further increases its strength after evolution. It cannot go above the card's evolution level.",
+    src: "/images/tokens/ascend_star.png",
+    category: "misc",
+  },
+  hero: {
+    id: "hero",
+    name: "Hero",
+    desc: "The Hero is the leader of your deck. Heroes cannot be attacked or damaged while there are units on their side of the field,except when they attack. 'If your Hero dies, you lose the game!'",
+    src: "/images/tokens/hero.png",
+    category: "misc",
+  },
+  unit: {
+    id: "unit",
+    name: "Unit",
+    desc: "Units form the majority of every deck. Use them to attack enemy cards!",
+    src: "/images/tokens/unit.png",
+    category: "misc",
+  },
+  strength: {
+    id: "strength",
+    name: "Strength",
+    desc: "Represents a card's attack power and health.",
+    src: "/images/tokens/strength.png",
+    category: "misc",
+  },
+  power: {
+    id: "power",
+    name: "Power",
+    desc: "Represents a card's effective combat rating, showing how powerful it is compared to other cards.",
+    src: "/images/tokens/power.png",
+    category: "misc",
   },
 
   //   ---------- Soulstones for ascending units ----------

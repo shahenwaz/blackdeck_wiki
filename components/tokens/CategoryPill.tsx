@@ -9,6 +9,7 @@ const COLORS: Record<TokenCategory, string> = {
   soulstone: "oklch(75% 0.16 150)", // green
   token: "oklch(78% 0.13 210)", // cyan/blue
   misc: "oklch(62% 0.03 275)", // neutral
+  "attack-pattern": "oklch(70% 0.24 28)", // warm red-orange
 };
 
 export function CategoryPill({
@@ -18,7 +19,8 @@ export function CategoryPill({
   category: TokenCategory;
   className?: string;
 }) {
-  const c = COLORS[category];
+  // Safe fallback if unknown category sneaks in
+  const c = COLORS[category] ?? "oklch(62% 0.03 275)";
   const label = category.replace("-", " ");
 
   return (
