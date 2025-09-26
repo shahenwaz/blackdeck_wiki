@@ -3,13 +3,30 @@ import * as React from "react";
 import type { TokenCategory } from "@/src/data/tokens";
 import { cn } from "@/lib/utils";
 
+/**
+ * Strongly separated hues (OKLCH):
+ * - resource: amber/gold
+ * - unit-type: vivid violet
+ * - attack-pattern: true red
+ * - soulstone: emerald
+ * - token: azure blue
+ * - misc: slate-neutral
+ * - guild: hot magenta
+ * - class: deep indigo (distinct from violet)
+ * - faction: teal/cyan
+ * - game-mode: lime (distinct from emerald)
+ */
 const COLORS: Record<TokenCategory, string> = {
-  resource: "oklch(78% 0.17 88)", // amber/gold
-  "unit-type": "oklch(70% 0.22 300)", // violet
-  soulstone: "oklch(75% 0.16 150)", // green
-  token: "oklch(78% 0.13 210)", // cyan/blue
-  misc: "oklch(62% 0.03 275)", // neutral
-  "attack-pattern": "oklch(70% 0.24 28)", // warm red-orange
+  resource: "oklch(78% 0.17 80)", // amber/gold
+  faction: "oklch(72% 0.16 50)", // earth/copper (warm orange-brown)
+  "unit-type": "oklch(70% 0.28 300)", // vivid violet
+  "attack-pattern": "oklch(68% 0.30 25)", // true red
+  class: "oklch(70% 0.24 272)", // deep indigo (bluer than violet)
+  soulstone: "oklch(74% 0.19 155)", // emerald
+  token: "oklch(70% 0.24 255)", // cobalt / blue (more chroma)
+  guild: "oklch(72% 0.27 335)", // hot magenta
+  "game-mode": "oklch(78% 0.20 128)", // lime
+  misc: "oklch(58% 0 0)", // neutral gray (no hue/chroma)
 };
 
 export function CategoryPill({
@@ -19,8 +36,7 @@ export function CategoryPill({
   category: TokenCategory;
   className?: string;
 }) {
-  // Safe fallback if unknown category sneaks in
-  const c = COLORS[category] ?? "oklch(62% 0.03 275)";
+  const c = COLORS[category] ?? "oklch(62% 0.02 260)";
   const label = category.replace("-", " ");
 
   return (
@@ -32,9 +48,10 @@ export function CategoryPill({
         className
       )}
       style={{
-        background: `color-mix(in oklab, ${c} 14%, transparent)`,
-        borderColor: `color-mix(in oklab, ${c} 42%, transparent)`,
-        color: `color-mix(in oklab, ${c} 65%, white)`,
+        // Slightly stronger mixes so borders/backgrounds read clearer on dark UIs
+        background: `color-mix(in oklab, ${c} 18%, transparent)`,
+        borderColor: `color-mix(in oklab, ${c} 50%, transparent)`,
+        color: `color-mix(in oklab, ${c} 70%, white)`,
       }}
     >
       {label}
