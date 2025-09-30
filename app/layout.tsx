@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Year from "@/components/others/year";
 import SiteNavbar from "@/components/core/SiteNavbar";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 export const metadata: Metadata = {
   title: "BlackDeck WiKi",
@@ -18,7 +19,9 @@ export default function RootLayout({
     <html lang="en" className="dark" suppressHydrationWarning>
       <body className="min-h-dvh" suppressHydrationWarning>
         <SiteNavbar />
-        <main className="pt-12 md:pt-16">{children}</main>
+        <main className="pt-12 md:pt-16">
+          <TooltipProvider delayDuration={150}>{children}</TooltipProvider>
+        </main>
         <footer className="border-t border-white/10">
           <div className="mx-auto max-w-6xl px-4 py-6 text-xs opacity-70">
             © <Year /> BlackDeck WiKi — Community project.
